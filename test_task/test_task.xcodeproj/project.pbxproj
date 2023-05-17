@@ -14,10 +14,11 @@
 		64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E542A14F36A00E4635F /* DependencyContainer.swift */; };
 		64FA1E572A14F39D00E4635F /* StorageDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E562A14F39D00E4635F /* StorageDataService.swift */; };
 		64FA1E592A14F3F400E4635F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E582A14F3F400E4635F /* NetworkService.swift */; };
-		64FA1E632A14FAFD00E4635F /* MainTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E622A14FAFD00E4635F /* MainTabPresenter.swift */; };
+		64FA1E632A14FAFD00E4635F /* SearchTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E622A14FAFD00E4635F /* SearchTabPresenter.swift */; };
 		64FA1E652A14FB3F00E4635F /* FavoritesTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E642A14FB3F00E4635F /* FavoritesTabPresenter.swift */; };
 		64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E662A14FB6600E4635F /* FavoritesViewController.swift */; };
-		64FA1E692A14FC0400E4635F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E682A14FC0400E4635F /* MainTabViewController.swift */; };
+		64FA1E692A14FC0400E4635F /* SearchTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E682A14FC0400E4635F /* SearchTabViewController.swift */; };
+		64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E6B2A150DBF00E4635F /* MainAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +31,11 @@
 		64FA1E542A14F36A00E4635F /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		64FA1E562A14F39D00E4635F /* StorageDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageDataService.swift; sourceTree = "<group>"; };
 		64FA1E582A14F3F400E4635F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		64FA1E622A14FAFD00E4635F /* MainTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabPresenter.swift; sourceTree = "<group>"; };
+		64FA1E622A14FAFD00E4635F /* SearchTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabPresenter.swift; sourceTree = "<group>"; };
 		64FA1E642A14FB3F00E4635F /* FavoritesTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTabPresenter.swift; sourceTree = "<group>"; };
 		64FA1E662A14FB6600E4635F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		64FA1E682A14FC0400E4635F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
+		64FA1E682A14FC0400E4635F /* SearchTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewController.swift; sourceTree = "<group>"; };
+		64FA1E6B2A150DBF00E4635F /* MainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				64FA1E602A14F98200E4635F /* Application */,
+				64FA1E6A2A150D9E00E4635F /* MainAssembly */,
 				64FA1E532A14F34800E4635F /* DependencyContainer */,
 			);
 			path = Core;
@@ -138,19 +141,19 @@
 		64FA1E4D2A14E88E00E4635F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				64FA1E4E2A14E8D200E4635F /* Main_Tab */,
+				64FA1E4E2A14E8D200E4635F /* Search_Tab */,
 				64FA1E4F2A14EA5600E4635F /* Favorites_Tab */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		64FA1E4E2A14E8D200E4635F /* Main_Tab */ = {
+		64FA1E4E2A14E8D200E4635F /* Search_Tab */ = {
 			isa = PBXGroup;
 			children = (
 				64FA1E5A2A14F81C00E4635F /* Presenter */,
 				64FA1E5B2A14F82400E4635F /* Views */,
 			);
-			path = Main_Tab;
+			path = Search_Tab;
 			sourceTree = "<group>";
 		};
 		64FA1E4F2A14EA5600E4635F /* Favorites_Tab */ = {
@@ -173,7 +176,7 @@
 		64FA1E5A2A14F81C00E4635F /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				64FA1E622A14FAFD00E4635F /* MainTabPresenter.swift */,
+				64FA1E622A14FAFD00E4635F /* SearchTabPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -181,7 +184,7 @@
 		64FA1E5B2A14F82400E4635F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				64FA1E682A14FC0400E4635F /* MainTabViewController.swift */,
+				64FA1E682A14FC0400E4635F /* SearchTabViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +211,14 @@
 				64FA1E2D2A14E52600E4635F /* AppDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		64FA1E6A2A150D9E00E4635F /* MainAssembly */ = {
+			isa = PBXGroup;
+			children = (
+				64FA1E6B2A150DBF00E4635F /* MainAssembly.swift */,
+			);
+			path = MainAssembly;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,12 +294,13 @@
 				64FA1E592A14F3F400E4635F /* NetworkService.swift in Sources */,
 				64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */,
 				64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */,
+				64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */,
 				64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */,
 				64FA1E652A14FB3F00E4635F /* FavoritesTabPresenter.swift in Sources */,
 				64FA1E4B2A14E7CE00E4635F /* Constants.swift in Sources */,
 				64FA1E572A14F39D00E4635F /* StorageDataService.swift in Sources */,
-				64FA1E632A14FAFD00E4635F /* MainTabPresenter.swift in Sources */,
-				64FA1E692A14FC0400E4635F /* MainTabViewController.swift in Sources */,
+				64FA1E632A14FAFD00E4635F /* SearchTabPresenter.swift in Sources */,
+				64FA1E692A14FC0400E4635F /* SearchTabViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

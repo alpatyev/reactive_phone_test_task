@@ -2,8 +2,8 @@ import Foundation
 
 // MARK: - Favorites tab presenter protocol
 
-protocol FavoritesTabPresenterProtocol {}
+protocol FavoritesTabInput {}
 
 // MARK: - Favorites tab presenter
 
-final class FavoritesTabPresenter: FavoritesTabPresenterProtocol {}
+final class FavoritesTabPresenter: FavoritesTabInput {}

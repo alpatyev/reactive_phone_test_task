@@ -1,13 +1,18 @@
 import UIKit
 
-// MARK: - Favorites tab view output protocol
+// MARK: - Favorites tab output protocol
 
-protocol FavoritesTabViewOutput: AnyObject {}
+protocol FavoritesTabOutput: AnyObject {}
 
 // MARK: - Favorites tab ViewController
 
-final class FavoritesTabViewController: UIViewController {}
+final class FavoritesTabViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .blue
+    }
+}
 
-// MARK: - Favorites tab view output
+// MARK: - Favorites tab output impl
 
-extension FavoritesTabViewController: FavoritesTabViewOutput {}
+extension FavoritesTabViewController: FavoritesTabOutput {}
