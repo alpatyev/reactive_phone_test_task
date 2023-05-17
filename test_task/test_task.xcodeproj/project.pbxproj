@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E2D2A14E52600E4635F /* AppDelegate.swift */; };
 		64FA1E372A14E52E00E4635F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E362A14E52E00E4635F /* Assets.xcassets */; };
 		64FA1E3A2A14E52E00E4635F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E382A14E52E00E4635F /* LaunchScreen.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_setPlaceholder.swift; sourceTree = "<group>"; };
 		64FA1E2A2A14E52600E4635F /* test_task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_task.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FA1E2D2A14E52600E4635F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64FA1E362A14E52E00E4635F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6491770E2A15831F00CFB00F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		64FA1E212A14E52500E4635F = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +101,7 @@
 				64FA1E432A14E6A200E4635F /* Core */,
 				64FA1E462A14E6E500E4635F /* Services */,
 				64FA1E4C2A14E87300E4635F /* Presentation */,
+				6491770E2A15831F00CFB00F /* Extensions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -292,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64FA1E592A14F3F400E4635F /* NetworkService.swift in Sources */,
+				649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */,
 				64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */,
 				64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */,
 				64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */,

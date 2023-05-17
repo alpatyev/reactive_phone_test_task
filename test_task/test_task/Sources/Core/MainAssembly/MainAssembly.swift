@@ -22,6 +22,7 @@ final class MainAssembly {
         
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [search, favorites].compactMap { $0 }
-        return tabBarController
+        
+        return UINavigationController(rootViewController: tabBarController)
     }
 }
