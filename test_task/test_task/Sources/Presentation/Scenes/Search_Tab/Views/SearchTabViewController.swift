@@ -2,7 +2,9 @@ import UIKit
 
 // MARK: - Search tab output protocol
 
-protocol SearchTabOutput: AnyObject {}
+protocol SearchTabOutput: AnyObject {
+    func closeKeyboard()
+}
 
 // MARK: - Search tab ViewController
 
@@ -25,11 +27,13 @@ final class SearchTabViewController: UIViewController {
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.delegate = self
+        textField.textAlignment = .center
+        textField.keyboardType = .alphabet
+        textField.returnKeyType = .search
         textField.font = Constants.Fonts.body
         textField.textColor = Constants.Colors.primaryText
-        textField.backgroundColor = Constants.Colors.backgroundAccent
         textField.setPlaceholder(text: Constants.Text.Search_Tab.placeholder,
-                                 color: Constants.Colors.primaryText)
+                                 color: Constants.Colors.secondaryText)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -46,12 +50,23 @@ final class SearchTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDependecies()
         setupView()
         setupHierarachy()
         setupLayout()
     }
     
     // MARK: - Setups
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        presenter?.tappedSomewhere()
+    }
+    
+    private func setupDependecies() {
+        presenter = DependencyContainer.shared.resolve(type: SearchTabInput.self)
+        presenter?.viewDidLoaded()
+    }
     
     private func setupView() {
         view.backgroundColor = Constants.Colors.background
@@ -76,11 +91,12 @@ final class SearchTabViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            searchTextField.widthAnchor.constraint(equalTo: searchTextFieldContainer.widthAnchor,
-                                                    multiplier: Constants.Layout.emdededContentMultiplier),
+            searchTextField.leftAnchor.constraint(equalTo: searchTextFieldContainer.leftAnchor,
+                                                  constant: Constants.Layout.smallPadding),
+            searchTextField.rightAnchor.constraint(equalTo: searchTextFieldContainer.rightAnchor,
+                                                   constant: -Constants.Layout.smallPadding),
             searchTextField.heightAnchor.constraint(equalTo: searchTextFieldContainer.heightAnchor,
                                                     multiplier: Constants.Layout.emdededContentMultiplier),
-            searchTextField.centerXAnchor.constraint(equalTo: searchTextFieldContainer.centerXAnchor),
             searchTextField.centerYAnchor.constraint(equalTo: searchTextFieldContainer.centerYAnchor)
 
         ])
@@ -99,7 +115,11 @@ final class SearchTabViewController: UIViewController {
 
 // MARK: - Search tab output impl
 
-extension SearchTabViewController: SearchTabOutput {}
+extension SearchTabViewController: SearchTabOutput {
+    func closeKeyboard() {
+        view.endEditing(true)
+    }
+}
 
 // MARK: - Search TextField delegate
 

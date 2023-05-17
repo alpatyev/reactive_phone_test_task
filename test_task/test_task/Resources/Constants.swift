@@ -11,7 +11,7 @@ enum Constants {
         static let backgroundAccent = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1.00)
         
         static let primaryText = UIColor.black
-        static let secondaryText = UIColor(red: 0.76, green: 0.76, blue: 0.76, alpha: 1.00)
+        static let secondaryText = UIColor(red: 0.32, green: 0.32, blue: 0.32, alpha: 1.00)
         
         static let accent = UIColor(red: 0.08, green: 1.00, blue: 0.86, alpha: 1.00)
     }
@@ -28,7 +28,7 @@ enum Constants {
     
     enum Layout {
         static let smallPadding: CGFloat = 14
-        static let smallElementHeight: CGFloat = 36
+        static let smallElementHeight: CGFloat = 34
         static let smallCornerRadius: CGFloat = 12
         
         static let mediumPadding: CGFloat = 40
