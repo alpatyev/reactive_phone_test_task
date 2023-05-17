@@ -1,0 +1,9 @@
+
+// MARK: - Text for Search_Tab
+
+"Search_Tab.placeholder" = "Enter image name here";
+"Search_Tab.navigationTitle" = "Search";
+
+// MARK: - Text for Favorites_Tab
+
+"Favorites_Tab.navigationTitle" = "Favorites";

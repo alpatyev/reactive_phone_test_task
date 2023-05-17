@@ -1,0 +1,9 @@
+
+// MARK: - Text for Search_Tab
+
+"Search_Tab.placeholder" = "Введите название картинки";
+"Search_Tab.navigationTitle" = "Поиск";
+
+// MARK: - Text for Favorites_Tab
+
+"Favorites_Tab.navigationTitle" = "Избранное";

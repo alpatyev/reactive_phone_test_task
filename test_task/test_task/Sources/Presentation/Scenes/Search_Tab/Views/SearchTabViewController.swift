@@ -28,6 +28,8 @@ final class SearchTabViewController: UIViewController {
         textField.font = Constants.Fonts.body
         textField.textColor = Constants.Colors.primaryText
         textField.backgroundColor = Constants.Colors.backgroundAccent
+        textField.setPlaceholder(text: Constants.Text.Search_Tab.placeholder,
+                                 color: Constants.Colors.primaryText)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
