@@ -3,6 +3,7 @@
 
 "Search_Tab.placeholder" = "Введите название картинки";
 "Search_Tab.navigationTitle" = "Поиск";
+"Search.Tab.imageDefaultText" = "Попробуйте найти пару уникальных картинок!";
 
 // MARK: - Text for Favorites_Tab
 

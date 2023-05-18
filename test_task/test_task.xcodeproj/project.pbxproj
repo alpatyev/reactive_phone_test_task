@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		6491771B2A158BDB00CFB00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6491771D2A158BDB00CFB00F /* Localizable.strings */; };
+		649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177202A15AFA200CFB00F /* SearchTabStateModel.swift */; };
 		64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E2D2A14E52600E4635F /* AppDelegate.swift */; };
 		64FA1E372A14E52E00E4635F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E362A14E52E00E4635F /* Assets.xcassets */; };
 		64FA1E3A2A14E52E00E4635F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E382A14E52E00E4635F /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 		6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_setPlaceholder.swift; sourceTree = "<group>"; };
 		6491771C2A158BDB00CFB00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6491771E2A158BDE00CFB00F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		649177202A15AFA200CFB00F /* SearchTabStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabStateModel.swift; sourceTree = "<group>"; };
 		64FA1E2A2A14E52600E4635F /* test_task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_task.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FA1E2D2A14E52600E4635F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64FA1E362A14E52E00E4635F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,6 +62,14 @@
 				6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		6491771F2A15AF8800CFB00F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				649177202A15AFA200CFB00F /* SearchTabStateModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		64FA1E212A14E52500E4635F = {
@@ -165,6 +175,7 @@
 		64FA1E4E2A14E8D200E4635F /* Search_Tab */ = {
 			isa = PBXGroup;
 			children = (
+				6491771F2A15AF8800CFB00F /* Model */,
 				64FA1E5A2A14F81C00E4635F /* Presenter */,
 				64FA1E5B2A14F82400E4635F /* Views */,
 			);
@@ -315,6 +326,7 @@
 				64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */,
 				64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */,
 				64FA1E652A14FB3F00E4635F /* FavoritesTabPresenter.swift in Sources */,
+				649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */,
 				64FA1E4B2A14E7CE00E4635F /* Constants.swift in Sources */,
 				64FA1E572A14F39D00E4635F /* StorageDataService.swift in Sources */,
 				64FA1E632A14FAFD00E4635F /* SearchTabPresenter.swift in Sources */,

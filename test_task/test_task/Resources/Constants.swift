@@ -19,20 +19,21 @@ enum Constants {
     // MARK: - Fonts environement
 
     enum Fonts {
-        static let title: UIFont = .systemFont(ofSize: 25, weight: .medium)
+        static let title: UIFont = .systemFont(ofSize: 24, weight: .medium)
+        static let subTitle: UIFont = .systemFont(ofSize: 18, weight: .medium)
         static let body: UIFont = .systemFont(ofSize: 16, weight: .regular)
-        static let thin: UIFont = .italicSystemFont(ofSize: 18)
+        static let thin: UIFont = .italicSystemFont(ofSize: 16)
     }
     
     // MARK: - Layout environement
     
     enum Layout {
         static let smallPadding: CGFloat = 14
-        static let smallElementHeight: CGFloat = 34
-        static let smallCornerRadius: CGFloat = 12
+        static let smallElementHeight: CGFloat = 42
+        static let smallCornerRadius: CGFloat = 18
         
         static let mediumPadding: CGFloat = 40
-        static let mediumCornerRadius: CGFloat = 16
+        static let mediumCornerRadius: CGFloat = 26
         
         static let defaultBorderWidth: CGFloat = 2
         static let emdededContentMultiplier: CGFloat = 0.84
@@ -44,6 +45,7 @@ enum Constants {
         enum Search_Tab {
             static let placeholder = NSLocalizedString("Search_Tab.placeholder", comment: "")
             static let navigationTitle = NSLocalizedString("Search_Tab.navigationTitle", comment: "")
+            static let imageDefaultText = NSLocalizedString("Search.Tab.imageDefaultText", comment: "")
         }
         
         enum Favorites_Tab {

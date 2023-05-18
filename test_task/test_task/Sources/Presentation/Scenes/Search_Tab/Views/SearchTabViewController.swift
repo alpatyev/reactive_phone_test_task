@@ -4,6 +4,7 @@ import UIKit
 
 protocol SearchTabOutput: AnyObject {
     func closeKeyboard()
+    func updateState(with newState: SearchTabStateModel)
 }
 
 // MARK: - Search tab ViewController
@@ -30,7 +31,7 @@ final class SearchTabViewController: UIViewController {
         textField.textAlignment = .center
         textField.keyboardType = .alphabet
         textField.returnKeyType = .search
-        textField.font = Constants.Fonts.body
+        textField.font = Constants.Fonts.subTitle
         textField.textColor = Constants.Colors.primaryText
         textField.setPlaceholder(text: Constants.Text.Search_Tab.placeholder,
                                  color: Constants.Colors.secondaryText)
@@ -38,12 +39,31 @@ final class SearchTabViewController: UIViewController {
         return textField
     }()
     
-    private lazy var highlightedContainer: UIView = {
-        let subview = UIView()
-        subview.backgroundColor = Constants.Colors.backgroundAccent
-        subview.layer.cornerRadius = Constants.Layout.mediumCornerRadius
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        return subview
+    private lazy var imageContainer: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = Constants.Colors.backgroundAccent
+        imageView.layer.cornerRadius = Constants.Layout.mediumCornerRadius
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var imageStatusLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 4
+        label.font = Constants.Fonts.title
+        label.textColor = Constants.Colors.accent
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var imageLoadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .gray
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
     
     // MARK: - Lifecycle
@@ -76,7 +96,9 @@ final class SearchTabViewController: UIViewController {
         view.addSubview(searchTextFieldContainer)
         searchTextFieldContainer.addSubview(searchTextField)
         
-        view.addSubview(highlightedContainer)
+        view.addSubview(imageContainer)
+        imageContainer.addSubview(imageStatusLabel)
+        imageContainer.addSubview(imageLoadingIndicator)
     }
     
     private func setupLayout() {
@@ -102,13 +124,27 @@ final class SearchTabViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            highlightedContainer.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor,
+            imageContainer.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor,
                                                       constant: Constants.Layout.mediumPadding),
-            highlightedContainer.widthAnchor.constraint(equalTo: view.widthAnchor,
+            imageContainer.widthAnchor.constraint(equalTo: view.widthAnchor,
                                                         multiplier: Constants.Layout.emdededContentMultiplier),
-            highlightedContainer.heightAnchor.constraint(equalTo: view.widthAnchor,
+            imageContainer.heightAnchor.constraint(equalTo: view.widthAnchor,
                                                          multiplier: Constants.Layout.emdededContentMultiplier),
-            highlightedContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            imageContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            imageStatusLabel.widthAnchor.constraint(equalTo: imageContainer.widthAnchor,
+                                                    multiplier: Constants.Layout.emdededContentMultiplier),
+            imageStatusLabel.heightAnchor.constraint(equalTo: imageContainer.heightAnchor,
+                                                     multiplier: Constants.Layout.emdededContentMultiplier),
+            imageStatusLabel.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            imageStatusLabel.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            imageLoadingIndicator.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            imageLoadingIndicator.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor)
         ])
     }
 }
@@ -116,6 +152,25 @@ final class SearchTabViewController: UIViewController {
 // MARK: - Search tab output impl
 
 extension SearchTabViewController: SearchTabOutput {
+    func updateState(with newState: SearchTabStateModel) {        
+        switch newState {
+            case .noImage(let label):
+                print("> noImage \(label)")
+                imageStatusLabel.text = label
+                imageStatusLabel.isHidden = false
+                imageLoadingIndicator.stopAnimating()
+            case .loading:
+                print("> loading")
+                imageLoadingIndicator.startAnimating()
+                imageStatusLabel.isHidden = true
+            case .loadedImage(let imageData):
+                print("> loadedImage \(imageData)")
+                imageContainer.image = UIImage(data: imageData)
+                imageStatusLabel.isHidden = true
+                imageLoadingIndicator.stopAnimating()
+        }
+    }
+    
     func closeKeyboard() {
         view.endEditing(true)
     }

@@ -3,6 +3,7 @@
 
 "Search_Tab.placeholder" = "Enter image name here";
 "Search_Tab.navigationTitle" = "Search";
+"Search.Tab.imageDefaultText" = "Try to find some unique images!";
 
 // MARK: - Text for Favorites_Tab
 

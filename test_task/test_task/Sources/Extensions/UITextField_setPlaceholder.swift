@@ -5,7 +5,7 @@ import UIKit
 extension UITextField {
     func setPlaceholder(text: String, color: UIColor) {
         let attributes = [NSAttributedString.Key.foregroundColor: color,
-                          NSAttributedString.Key.font: Constants.Fonts.body]
+                          NSAttributedString.Key.font: Constants.Fonts.subTitle]
         attributedPlaceholder = NSAttributedString(string: text, attributes: attributes)
     }
 }
