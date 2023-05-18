@@ -10,6 +10,8 @@
 		643CD3FE2A165A76004E8AAF /* UIViewController_setups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD3FD2A165A76004E8AAF /* UIViewController_setups.swift */; };
 		643CD4012A165FB2004E8AAF /* FavoritesTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4002A165FB2004E8AAF /* FavoritesTabStateModel.swift */; };
 		643CD4032A1664A3004E8AAF /* UILabel_setStandardAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */; };
+		643CD4082A16669D004E8AAF /* ImageItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4072A16669D004E8AAF /* ImageItemModel.swift */; };
+		643CD40B2A166F80004E8AAF /* UITableViewCell_setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */; };
 		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		6491771B2A158BDB00CFB00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6491771D2A158BDB00CFB00F /* Localizable.strings */; };
 		649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177202A15AFA200CFB00F /* SearchTabStateModel.swift */; };
@@ -33,6 +35,8 @@
 		643CD3FD2A165A76004E8AAF /* UIViewController_setups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_setups.swift; sourceTree = "<group>"; };
 		643CD4002A165FB2004E8AAF /* FavoritesTabStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTabStateModel.swift; sourceTree = "<group>"; };
 		643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel_setStandardAppearance.swift; sourceTree = "<group>"; };
+		643CD4072A16669D004E8AAF /* ImageItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemModel.swift; sourceTree = "<group>"; };
+		643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell_setup.swift; sourceTree = "<group>"; };
 		6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_setPlaceholder.swift; sourceTree = "<group>"; };
 		6491771C2A158BDB00CFB00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6491771E2A158BDE00CFB00F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -74,6 +78,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		643CD4062A16668C004E8AAF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				643CD4072A16669D004E8AAF /* ImageItemModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		6491770E2A15831F00CFB00F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +94,7 @@
 				649177242A15E41B00CFB00F /* UIButton_highlightable.swift */,
 				643CD3FD2A165A76004E8AAF /* UIViewController_setups.swift */,
 				643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */,
+				643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -145,6 +158,7 @@
 		64FA1E432A14E6A200E4635F /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				643CD4062A16668C004E8AAF /* Models */,
 				64FA1E602A14F98200E4635F /* Application */,
 				64FA1E6A2A150D9E00E4635F /* MainAssembly */,
 				64FA1E532A14F34800E4635F /* DependencyContainer */,
@@ -199,7 +213,7 @@
 			children = (
 				6491771F2A15AF8800CFB00F /* Model */,
 				64FA1E5A2A14F81C00E4635F /* Presenter */,
-				64FA1E5B2A14F82400E4635F /* Views */,
+				64FA1E5B2A14F82400E4635F /* View */,
 			);
 			path = Search_Tab;
 			sourceTree = "<group>";
@@ -230,12 +244,12 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		64FA1E5B2A14F82400E4635F /* Views */ = {
+		64FA1E5B2A14F82400E4635F /* View */ = {
 			isa = PBXGroup;
 			children = (
 				64FA1E682A14FC0400E4635F /* SearchTabViewController.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		64FA1E5C2A14F82D00E4635F /* Views */ = {
@@ -342,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				643CD4082A16669D004E8AAF /* ImageItemModel.swift in Sources */,
 				649177252A15E41C00CFB00F /* UIButton_highlightable.swift in Sources */,
 				64FA1E592A14F3F400E4635F /* NetworkService.swift in Sources */,
 				649177232A15E1EF00CFB00F /* UIColor_image.swift in Sources */,
@@ -359,6 +374,7 @@
 				64FA1E632A14FAFD00E4635F /* SearchTabPresenter.swift in Sources */,
 				64FA1E692A14FC0400E4635F /* SearchTabViewController.swift in Sources */,
 				643CD4032A1664A3004E8AAF /* UILabel_setStandardAppearance.swift in Sources */,
+				643CD40B2A166F80004E8AAF /* UITableViewCell_setup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

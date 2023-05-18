@@ -17,9 +17,11 @@ final class FavoritesTabViewController: UIViewController {
     // MARK: - UI
     
     private lazy var favoritesList: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
-        tableView.backgroundColor = .green
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: imageCellID)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -30,6 +32,11 @@ final class FavoritesTabViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Private properties
+    
+    private let imageCellID = "imageCell"
+    private var itemModelsList = [ImageItemModel]()
     
     // MARK: - Lifecycle
     
@@ -76,12 +83,42 @@ final class FavoritesTabViewController: UIViewController {
             listStatusLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
+    
+    // MARK: - Actions
+    
+    private func selectedListItem(at indexPath: IndexPath) {
+        print(indexPath)
+    }
+    
+    private func tappedNavigationBarInfoButton() {
+        presenter?.tappedInfoButton()
+    }
 }
 
-// MARK: - TableView delegate
+// MARK: - TableView datasource & delegate
+
+extension FavoritesTabViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        itemModelsList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: imageCellID, for: indexPath)
+        let itemModel = itemModelsList[indexPath.row]
+        cell.setup(with: itemModel)
+        return cell
+    }
+}
 
 extension FavoritesTabViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        Constants.Layout.defaultRowHeight
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter?.selectedItem(itemModelsList[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: - Favorites tab output impl
@@ -89,7 +126,7 @@ extension FavoritesTabViewController: UITableViewDelegate {
 extension FavoritesTabViewController: FavoritesTabOutput {
     func updateState(with newState: FavoritesTabStateModel) {
         switch newState {
-            case .empty(let message):
+            case .message(let message):
                 performEmptyState(message)
             case .itemList(let items):
                 updateFavoritesList(items)
@@ -103,10 +140,11 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         listStatusLabel.text = message
     }
     
-    private func updateFavoritesList(_ items: [Data]) {
+    private func updateFavoritesList(_ items: [ImageItemModel]) {
         favoritesList.isHidden = false
         listStatusLabel.isHidden = true
         
-        print(items)
+        itemModelsList = items
+        favoritesList.reloadData()
     }
 }
