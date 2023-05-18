@@ -34,22 +34,6 @@ extension SearchTabPresenter: SearchTabInput {
     func viewDidLoaded() {
         view = DependencyContainer.shared.resolve(type: SearchTabOutput.self)
         view?.updateState(with: model)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.view?.updateState(with: .loading)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-            self.view?.updateState(with: .noImage(Constants.Text.Search_Tab.imageDefaultLabel))
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 20) {
-            self.view?.updateState(with: .loadedImage(Data()))
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 13) {
-            self.view?.updateState(with: .loading)
-        }
     }
     
     func tappedSomewhere() {

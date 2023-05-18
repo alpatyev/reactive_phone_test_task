@@ -50,6 +50,8 @@ enum Constants {
         
         enum Favorites_Tab {
             static let navigationTitle = NSLocalizedString("Favorites_Tab.navigationTitle", comment: "")
+            static let emptyListText = NSLocalizedString("Favorites_Tab.emptyListText", comment: "")
+
         }
     }
  }

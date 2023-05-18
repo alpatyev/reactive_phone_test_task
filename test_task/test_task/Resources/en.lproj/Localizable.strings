@@ -6,8 +6,9 @@
 "Search_Tab.imageDefaultLabel" = "Try to find some unique images!";
 "Search_Tab.saveButton" = "Save";
 "Search_Tab.removeButton" = "Remove";
-"Search_Tab.randomButton" = "Get random image..";
+"Search_Tab.randomButton" = "Get random image";
 
 // MARK: - Text for Favorites_Tab
 
 "Favorites_Tab.navigationTitle" = "Favorites";
+"Favorites_Tab.emptyListText" = "Sorry, we can`t find any images.\nTry to get it in search tab...";

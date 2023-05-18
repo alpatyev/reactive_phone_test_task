@@ -51,11 +51,7 @@ final class SearchTabViewController: UIViewController {
     
     private lazy var imageStatusLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 4
-        label.font = Constants.Fonts.title
-        label.textColor = Constants.Colors.accent
+        label.setStandardAppearance()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -74,6 +70,7 @@ final class SearchTabViewController: UIViewController {
         button.highlightable(accentColor: Constants.Colors.accent,
                              title: Constants.Text.Search_Tab.saveButton)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -84,6 +81,7 @@ final class SearchTabViewController: UIViewController {
         button.highlightable(accentColor: Constants.Colors.destructive,
                              title: Constants.Text.Search_Tab.removeButton)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -94,6 +92,7 @@ final class SearchTabViewController: UIViewController {
         button.setTitleColor(Constants.Colors.secondaryText, for: .normal)
         button.setTitleColor(Constants.Colors.accent, for: .highlighted)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -122,26 +121,8 @@ final class SearchTabViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = Constants.Colors.background
-        
-        let titleAttributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.accent]
-        
-        if #available(iOS 15.0, *) {
-            let tabBarAppearance = UITabBarAppearance()
-            let navigationBarAppearance = UINavigationBarAppearance()
-            
-            navigationBarAppearance.titleTextAttributes = titleAttributes
-        
-            tabBarController?.tabBar.standardAppearance = tabBarAppearance
-            tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
-            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        } else {
-            navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        }
-    
-        tabBarController?.tabBar.tintColor = Constants.Colors.accent
-        navigationController?.navigationBar.tintColor = Constants.Colors.accent
-        navigationItem.title = Constants.Text.Search_Tab.navigationTitle
+        navigationController?.navigationBar.prefersLargeTitles = false
+        setupHolderControllersAppearance(Constants.Text.Search_Tab.navigationTitle)
     }
     
     private func setupHierarachy() {
@@ -161,10 +142,9 @@ final class SearchTabViewController: UIViewController {
         NSLayoutConstraint.activate([
             searchTextFieldContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                  constant: Constants.Layout.smallPadding),
-            searchTextFieldContainer.leftAnchor.constraint(equalTo: view.leftAnchor,
-                                                  constant: Constants.Layout.smallPadding),
-            searchTextFieldContainer.rightAnchor.constraint(equalTo: view.rightAnchor,
-                                                   constant: -Constants.Layout.smallPadding),
+            searchTextFieldContainer.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                            multiplier: Constants.Layout.emdededContentMultiplier),
+            searchTextFieldContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchTextFieldContainer.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight)
         ])
         
@@ -233,15 +213,15 @@ final class SearchTabViewController: UIViewController {
     
     // MARK: - Actions
     
-    private func removeButtonTapped() {
+    @objc private func removeButtonTapped() {
         presenter?.removeButtonTapped()
     }
     
-    private func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         presenter?.saveButtonTapped()
     }
     
-    private func randomButtonTapped() {
+    @objc private func randomButtonTapped() {
         presenter?.randomButtonTapped()
     }
 }
