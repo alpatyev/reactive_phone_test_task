@@ -17,11 +17,19 @@ final class MainAssembly {
     // MARK: - Create main viewController
     
     static func resolveMainScene() -> UIViewController? {
-        let search = DependencyContainer.shared.resolve(type: SearchTabOutput.self) as? UIViewController
-        let favorites = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self) as? UIViewController
-        
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [search, favorites].compactMap { $0 }
-        return tabBarController
+        if let search = DependencyContainer.shared.resolve(type: SearchTabOutput.self) as? UIViewController,
+           let favorites = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self) as? UIViewController {
+            search.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "sparkle.magnifyingglass"), tag: 0)
+            favorites.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "star.fill"), tag: 1)
+
+            let embeddedSearch = UINavigationController(rootViewController: search)
+            let embeddedFavorites = UINavigationController(rootViewController: favorites)
+            
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [embeddedSearch, embeddedFavorites]
+            return tabBarController
+        } else {
+            return nil
+        }
     }
 }
