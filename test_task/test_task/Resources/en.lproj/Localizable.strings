@@ -3,7 +3,10 @@
 
 "Search_Tab.placeholder" = "Enter image name here";
 "Search_Tab.navigationTitle" = "Search";
-"Search.Tab.imageDefaultText" = "Try to find some unique images!";
+"Search_Tab.imageDefaultLabel" = "Try to find some unique images!";
+"Search_Tab.saveButton" = "Save";
+"Search_Tab.removeButton" = "Remove";
+"Search_Tab.randomButton" = "Get random image..";
 
 // MARK: - Text for Favorites_Tab
 

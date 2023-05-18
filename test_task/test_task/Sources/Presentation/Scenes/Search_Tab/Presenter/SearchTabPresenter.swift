@@ -4,7 +4,13 @@ import Foundation
 
 protocol SearchTabInput {
     func viewDidLoaded()
+    
     func tappedSomewhere()
+    func saveButtonTapped()
+    func removeButtonTapped()
+    func randomButtonTapped()
+    
+    func textFieldReturned(_ value: String?)
 }
 
 // MARK: - Search tab selected image protocol
@@ -18,7 +24,7 @@ protocol SearchTabSelectedImageInput {
 final class SearchTabPresenter {
     
     private weak var view: SearchTabOutput?
-    private var model = SearchTabStateModel.noImage(Constants.Text.Search_Tab.imageDefaultText)
+    private var model = SearchTabStateModel.noImage(Constants.Text.Search_Tab.imageDefaultLabel)
     
 }
 
@@ -34,14 +40,14 @@ extension SearchTabPresenter: SearchTabInput {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-            self.view?.updateState(with: .noImage("ss"))
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 16) {
-            self.view?.updateState(with: .loadedImage(Data()))
+            self.view?.updateState(with: .noImage(Constants.Text.Search_Tab.imageDefaultLabel))
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 20) {
+            self.view?.updateState(with: .loadedImage(Data()))
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 13) {
             self.view?.updateState(with: .loading)
         }
     }
@@ -50,6 +56,24 @@ extension SearchTabPresenter: SearchTabInput {
         DispatchQueue.main.async { [weak self] in
             self?.view?.closeKeyboard()
         }
+    }
+    
+    func saveButtonTapped() {
+        print(#function)
+    }
+    
+    func removeButtonTapped() {
+        print(#function)
+    }
+    
+    func randomButtonTapped() {
+        print(#function)
+    }
+    
+    func textFieldReturned(_ value: String?) {
+        guard let searchText = value else { return }
+        print(searchText)
+        view?.closeKeyboard()
     }
 }
 

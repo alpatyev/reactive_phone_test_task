@@ -42,7 +42,9 @@ final class SearchTabViewController: UIViewController {
     private lazy var imageContainer: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = Constants.Colors.backgroundAccent
+        imageView.layer.borderWidth = Constants.Layout.defaultBorderWidth
         imageView.layer.cornerRadius = Constants.Layout.mediumCornerRadius
+        imageView.layer.borderColor = Constants.Colors.accent.withAlphaComponent(0.6).cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -64,6 +66,36 @@ final class SearchTabViewController: UIViewController {
         indicator.hidesWhenStopped = true
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
+    }()
+    
+    private lazy var saveImageButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = Constants.Fonts.thin
+        button.highlightable(accentColor: Constants.Colors.accent,
+                             title: Constants.Text.Search_Tab.saveButton)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var removeImageButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = Constants.Fonts.thin
+        button.highlightable(accentColor: Constants.Colors.destructive,
+                             title: Constants.Text.Search_Tab.removeButton)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var randomImageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(Constants.Text.Search_Tab.randomButton, for: .normal)
+        button.setTitleColor(Constants.Colors.secondaryText, for: .normal)
+        button.setTitleColor(Constants.Colors.accent, for: .highlighted)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -107,12 +139,6 @@ final class SearchTabViewController: UIViewController {
             navigationController?.navigationBar.titleTextAttributes = titleAttributes
         }
     
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let cv = UIViewController()
-            cv.view.backgroundColor  = .white
-            self.navigationController?.pushViewController(cv, animated: true)
-        }
-        
         tabBarController?.tabBar.tintColor = Constants.Colors.accent
         navigationController?.navigationBar.tintColor = Constants.Colors.accent
         navigationItem.title = Constants.Text.Search_Tab.navigationTitle
@@ -125,6 +151,10 @@ final class SearchTabViewController: UIViewController {
         view.addSubview(imageContainer)
         imageContainer.addSubview(imageStatusLabel)
         imageContainer.addSubview(imageLoadingIndicator)
+        
+        view.addSubview(saveImageButton)
+        view.addSubview(removeImageButton)
+        view.addSubview(randomImageButton)
     }
     
     private func setupLayout() {
@@ -151,7 +181,7 @@ final class SearchTabViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             imageContainer.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor,
-                                                      constant: Constants.Layout.mediumPadding),
+                                                      constant: Constants.Layout.smallPadding),
             imageContainer.widthAnchor.constraint(equalTo: view.widthAnchor,
                                                         multiplier: Constants.Layout.emdededContentMultiplier),
             imageContainer.heightAnchor.constraint(equalTo: view.widthAnchor,
@@ -172,6 +202,47 @@ final class SearchTabViewController: UIViewController {
             imageLoadingIndicator.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
             imageLoadingIndicator.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            removeImageButton.topAnchor.constraint(equalTo: imageContainer.bottomAnchor,
+                                                   constant: Constants.Layout.smallPadding),
+            removeImageButton.leftAnchor.constraint(equalTo: imageContainer.leftAnchor,
+                                                    constant: Constants.Layout.smallPadding),
+            removeImageButton.widthAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight * 2.2),
+            removeImageButton.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight)
+        ])
+        
+        NSLayoutConstraint.activate([
+            saveImageButton.topAnchor.constraint(equalTo: imageContainer.bottomAnchor,
+                                                 constant: Constants.Layout.smallPadding),
+            saveImageButton.rightAnchor.constraint(equalTo: imageContainer.rightAnchor,
+                                                   constant: -Constants.Layout.smallPadding),
+            saveImageButton.widthAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight * 2.2),
+            saveImageButton.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight)
+        ])
+        
+        NSLayoutConstraint.activate([
+            randomImageButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                   constant: -Constants.Layout.smallPadding),
+            randomImageButton.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                     multiplier: Constants.Layout.emdededContentMultiplier),
+            randomImageButton.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight),
+            randomImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    
+    // MARK: - Actions
+    
+    private func removeButtonTapped() {
+        presenter?.removeButtonTapped()
+    }
+    
+    private func saveButtonTapped() {
+        presenter?.saveButtonTapped()
+    }
+    
+    private func randomButtonTapped() {
+        presenter?.randomButtonTapped()
     }
 }
 
@@ -181,27 +252,46 @@ extension SearchTabViewController: SearchTabOutput {
     func updateState(with newState: SearchTabStateModel) {        
         switch newState {
             case .noImage(let label):
-                print("> noImage \(label)")
-                imageStatusLabel.text = label
-                imageStatusLabel.isHidden = false
-                imageLoadingIndicator.stopAnimating()
+                performNoImageState(label)
             case .loading:
-                print("> loading")
-                imageLoadingIndicator.startAnimating()
-                imageStatusLabel.isHidden = true
+                performLoadingState()
             case .loadedImage(let imageData):
-                print("> loadedImage \(imageData)")
-                imageContainer.image = UIImage(data: imageData)
-                imageStatusLabel.isHidden = true
-                imageLoadingIndicator.stopAnimating()
+                performLoadedImageState(imageData)
+             
         }
     }
     
     func closeKeyboard() {
         view.endEditing(true)
     }
+    
+    private func performNoImageState(_ label: String) {
+        imageStatusLabel.text = label
+        imageStatusLabel.isHidden = false
+        saveImageButton.isHidden = true
+        removeImageButton.isHidden = true
+        imageLoadingIndicator.stopAnimating()
+    }
+    
+    private func performLoadingState() {
+        imageStatusLabel.isHidden = true
+        imageLoadingIndicator.startAnimating()
+    }
+    
+    private func performLoadedImageState(_ imageData: Data) {
+        imageContainer.image = UIImage(data: imageData)
+        imageStatusLabel.isHidden = true
+        saveImageButton.isHidden = false
+        removeImageButton.isHidden = false
+        imageLoadingIndicator.stopAnimating()
+    }
 }
 
 // MARK: - Search TextField delegate
 
-extension SearchTabViewController: UISearchTextFieldDelegate {}
+extension SearchTabViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        presenter?.textFieldReturned(textField.text)
+        return true
+    }
+}

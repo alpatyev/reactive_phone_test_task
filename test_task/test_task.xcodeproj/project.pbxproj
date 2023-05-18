@@ -10,6 +10,8 @@
 		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		6491771B2A158BDB00CFB00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6491771D2A158BDB00CFB00F /* Localizable.strings */; };
 		649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177202A15AFA200CFB00F /* SearchTabStateModel.swift */; };
+		649177232A15E1EF00CFB00F /* UIColor_image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177222A15E1EE00CFB00F /* UIColor_image.swift */; };
+		649177252A15E41C00CFB00F /* UIButton_highlightable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177242A15E41B00CFB00F /* UIButton_highlightable.swift */; };
 		64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FA1E2D2A14E52600E4635F /* AppDelegate.swift */; };
 		64FA1E372A14E52E00E4635F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E362A14E52E00E4635F /* Assets.xcassets */; };
 		64FA1E3A2A14E52E00E4635F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64FA1E382A14E52E00E4635F /* LaunchScreen.storyboard */; };
@@ -29,6 +31,8 @@
 		6491771C2A158BDB00CFB00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6491771E2A158BDE00CFB00F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		649177202A15AFA200CFB00F /* SearchTabStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabStateModel.swift; sourceTree = "<group>"; };
+		649177222A15E1EE00CFB00F /* UIColor_image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_image.swift; sourceTree = "<group>"; };
+		649177242A15E41B00CFB00F /* UIButton_highlightable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton_highlightable.swift; sourceTree = "<group>"; };
 		64FA1E2A2A14E52600E4635F /* test_task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_task.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FA1E2D2A14E52600E4635F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64FA1E362A14E52E00E4635F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */,
+				649177222A15E1EE00CFB00F /* UIColor_image.swift */,
+				649177242A15E41B00CFB00F /* UIButton_highlightable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -319,7 +325,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649177252A15E41C00CFB00F /* UIButton_highlightable.swift in Sources */,
 				64FA1E592A14F3F400E4635F /* NetworkService.swift in Sources */,
+				649177232A15E1EF00CFB00F /* UIColor_image.swift in Sources */,
 				649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */,
 				64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */,
 				64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */,

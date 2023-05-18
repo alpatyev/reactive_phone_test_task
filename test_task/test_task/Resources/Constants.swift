@@ -11,7 +11,8 @@ enum Constants {
         static let backgroundAccent = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1.00)
         static let primaryText = UIColor.black
         static let secondaryText = UIColor(red: 0.32, green: 0.32, blue: 0.32, alpha: 1.00)
-        static let accent = UIColor(red: 0.28, green: 0.8, blue: 0.86, alpha: 1.00)
+        static let accent = UIColor(red: 0.04, green: 0.78, blue: 1.00, alpha: 1.00)
+        static let destructive = UIColor(red: 1.00, green: 0.09, blue: 0.18, alpha: 1.00)
     }
     
     // MARK: - Fonts environement
@@ -28,9 +29,9 @@ enum Constants {
     enum Layout {
         static let smallPadding: CGFloat = 14
         static let smallElementHeight: CGFloat = 42
-        static let smallCornerRadius: CGFloat = 18
+        static let smallCornerRadius: CGFloat = 10
         static let mediumPadding: CGFloat = 40
-        static let mediumCornerRadius: CGFloat = 26
+        static let mediumCornerRadius: CGFloat = 24
         static let defaultBorderWidth: CGFloat = 2
         static let emdededContentMultiplier: CGFloat = 0.84
     }
@@ -41,7 +42,10 @@ enum Constants {
         enum Search_Tab {
             static let placeholder = NSLocalizedString("Search_Tab.placeholder", comment: "")
             static let navigationTitle = NSLocalizedString("Search_Tab.navigationTitle", comment: "")
-            static let imageDefaultText = NSLocalizedString("Search.Tab.imageDefaultText", comment: "")
+            static let imageDefaultLabel = NSLocalizedString("Search_Tab.imageDefaultLabel", comment: "")
+            static let saveButton = NSLocalizedString("Search_Tab.saveButton", comment: "")
+            static let removeButton = NSLocalizedString("Search_Tab.removeButton", comment: "")
+            static let randomButton = NSLocalizedString("Search_Tab.randomButton", comment: "")
         }
         
         enum Favorites_Tab {
