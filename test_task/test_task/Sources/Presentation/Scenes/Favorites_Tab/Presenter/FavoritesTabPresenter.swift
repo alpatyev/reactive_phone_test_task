@@ -5,7 +5,7 @@ import UIKit
 
 protocol FavoritesTabInput {
     func viewDidLoaded()
-    
+    func viewDisappeared()
     func selectedItem(_ value: ImageItemModel)
     func tappedInfoButton()
 }
@@ -15,8 +15,8 @@ protocol FavoritesTabInput {
 final class FavoritesTabPresenter {
     
     private var view: FavoritesTabOutput?
-    private var model: FavoritesTabStateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
-    
+    private var stateModel: FavoritesTabStateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
+    private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list
 }
 
 // MARK: - Favorites tab view input
@@ -24,7 +24,8 @@ final class FavoritesTabPresenter {
 extension FavoritesTabPresenter: FavoritesTabInput {
     func viewDidLoaded() {
         view = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self)
-        view?.updateState(with: model)
+        view?.updateNavigationBarState(with: .list)
+        view?.updateState(with: stateModel)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             guard let img = UIImage(named: "star.fill") else { return }
@@ -45,12 +46,23 @@ extension FavoritesTabPresenter: FavoritesTabInput {
         }
     }
     
+    func viewDisappeared() {
+        view?.toggleUserInteractions(with: true)
+    }
+    
     func selectedItem(_ value: ImageItemModel) {
         print(value)
+        view?.toggleUserInteractions(with: false)
     }
     
     func tappedInfoButton() {
-        // change image
-        // hide table view and show message
+        switch helperButtonStateModel {
+            case .list:
+                helperButtonStateModel = .info("всего 5 айтемов")
+            case .info(_):
+                helperButtonStateModel = .list
+        }
+        
+        view?.updateNavigationBarState(with: helperButtonStateModel)
     }
 }

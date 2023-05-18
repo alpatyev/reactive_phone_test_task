@@ -37,6 +37,15 @@ enum Constants {
         static let defaultRowHeight: CGFloat = 80
     }
     
+    // MARK: - Asset images names environement
+    
+    enum ImageNames {
+        static let info: String = "info.circle"
+        static let search: String = "sparkle.magnifyingglass"
+        static let favorites: String = "star.fill"
+        static let list: String = "rectangle.grid.1x2.fill"
+    }
+    
     // MARK: - Text environement
     
     enum Text {

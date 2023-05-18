@@ -4,6 +4,8 @@ import UIKit
 
 protocol FavoritesTabOutput: AnyObject {
     func updateState(with newState: FavoritesTabStateModel)
+    func updateNavigationBarState(with newState: NavigationBarInfoButtonStateModel)
+    func toggleUserInteractions(with flag: Bool)
 }
 
 // MARK: - Favorites tab ViewController
@@ -48,6 +50,11 @@ final class FavoritesTabViewController: UIViewController {
         setupLayout()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        presenter?.viewDisappeared()
+    }
+    
     // MARK: - Setups
     
     private func setupDependencies() {
@@ -59,6 +66,12 @@ final class FavoritesTabViewController: UIViewController {
         view.backgroundColor = Constants.Colors.background
         navigationController?.navigationBar.prefersLargeTitles = true
         setupHolderControllersAppearance(Constants.Text.Favorites_Tab.navigationTitle)
+        
+        let button = UIBarButtonItem(image: UIImage(named: Constants.ImageNames.info),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(tappedNavigationBarInfoButton))
+        navigationItem.rightBarButtonItem = button
     }
     
     private func setupHierarachy() {
@@ -87,10 +100,10 @@ final class FavoritesTabViewController: UIViewController {
     // MARK: - Actions
     
     private func selectedListItem(at indexPath: IndexPath) {
-        print(indexPath)
+        presenter?.selectedItem(itemModelsList[indexPath.row])
     }
     
-    private func tappedNavigationBarInfoButton() {
+    @objc private func tappedNavigationBarInfoButton() {
         presenter?.tappedInfoButton()
     }
 }
@@ -133,6 +146,20 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         }
     }
     
+    func toggleUserInteractions(with flag: Bool) {
+        view.isUserInteractionEnabled = flag
+    }
+    
+    func updateNavigationBarState(with newState: NavigationBarInfoButtonStateModel) {
+        switch newState {
+            case .info(let message):
+                performNavigationBarInfoState(message)
+            case .list:
+                performNavigationBarListState()
+        }
+    }
+    
+    
     private func performEmptyState(_ message: String) {
         favoritesList.isHidden = true
         listStatusLabel.isHidden = false
@@ -146,5 +173,20 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         
         itemModelsList = items
         favoritesList.reloadData()
+    }
+    
+    private func performNavigationBarInfoState(_ message: String) {
+        favoritesList.isHidden = true
+        listStatusLabel.isHidden = false
+        listStatusLabel.text = message
+        
+        navigationItem.rightBarButtonItem?.image = UIImage(named: Constants.ImageNames.list)
+    }
+    
+    private func performNavigationBarListState() {
+        favoritesList.isHidden = false
+        listStatusLabel.isHidden = true
+        
+        navigationItem.rightBarButtonItem?.image = UIImage(named: Constants.ImageNames.info)
     }
 }

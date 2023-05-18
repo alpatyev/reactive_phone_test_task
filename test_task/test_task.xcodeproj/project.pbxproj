@@ -12,6 +12,7 @@
 		643CD4032A1664A3004E8AAF /* UILabel_setStandardAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */; };
 		643CD4082A16669D004E8AAF /* ImageItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4072A16669D004E8AAF /* ImageItemModel.swift */; };
 		643CD40B2A166F80004E8AAF /* UITableViewCell_setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */; };
+		643CD40D2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40C2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift */; };
 		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		6491771B2A158BDB00CFB00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6491771D2A158BDB00CFB00F /* Localizable.strings */; };
 		649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177202A15AFA200CFB00F /* SearchTabStateModel.swift */; };
@@ -37,6 +38,7 @@
 		643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel_setStandardAppearance.swift; sourceTree = "<group>"; };
 		643CD4072A16669D004E8AAF /* ImageItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemModel.swift; sourceTree = "<group>"; };
 		643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell_setup.swift; sourceTree = "<group>"; };
+		643CD40C2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarInfoButtonStateModel.swift; sourceTree = "<group>"; };
 		6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_setPlaceholder.swift; sourceTree = "<group>"; };
 		6491771C2A158BDB00CFB00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6491771E2A158BDE00CFB00F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -70,12 +72,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		643CD3FF2A165F99004E8AAF /* Model */ = {
+		643CD3FF2A165F99004E8AAF /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				643CD4002A165FB2004E8AAF /* FavoritesTabStateModel.swift */,
+				643CD40C2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		643CD4062A16668C004E8AAF /* Models */ = {
@@ -221,7 +224,7 @@
 		64FA1E4F2A14EA5600E4635F /* Favorites_Tab */ = {
 			isa = PBXGroup;
 			children = (
-				643CD3FF2A165F99004E8AAF /* Model */,
+				643CD3FF2A165F99004E8AAF /* Models */,
 				64FA1E5D2A14F83300E4635F /* Presenter */,
 				64FA1E5C2A14F82D00E4635F /* Views */,
 			);
@@ -365,6 +368,7 @@
 				64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */,
 				643CD3FE2A165A76004E8AAF /* UIViewController_setups.swift in Sources */,
 				64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */,
+				643CD40D2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift in Sources */,
 				64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */,
 				64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */,
 				64FA1E652A14FB3F00E4635F /* FavoritesTabPresenter.swift in Sources */,
