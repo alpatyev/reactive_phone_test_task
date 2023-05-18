@@ -90,6 +90,32 @@ final class SearchTabViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = Constants.Colors.background
+        
+        let titleAttributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.accent]
+        
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            let navigationBarAppearance = UINavigationBarAppearance()
+            
+            navigationBarAppearance.titleTextAttributes = titleAttributes
+        
+            tabBarController?.tabBar.standardAppearance = tabBarAppearance
+            tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        } else {
+            navigationController?.navigationBar.titleTextAttributes = titleAttributes
+        }
+    
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let cv = UIViewController()
+            cv.view.backgroundColor  = .white
+            self.navigationController?.pushViewController(cv, animated: true)
+        }
+        
+        tabBarController?.tabBar.tintColor = Constants.Colors.accent
+        navigationController?.navigationBar.tintColor = Constants.Colors.accent
+        navigationItem.title = Constants.Text.Search_Tab.navigationTitle
     }
     
     private func setupHierarachy() {

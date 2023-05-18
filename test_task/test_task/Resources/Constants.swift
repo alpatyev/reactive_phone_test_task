@@ -9,11 +9,9 @@ enum Constants {
     enum Colors {
         static let background = UIColor.white
         static let backgroundAccent = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1.00)
-        
         static let primaryText = UIColor.black
         static let secondaryText = UIColor(red: 0.32, green: 0.32, blue: 0.32, alpha: 1.00)
-        
-        static let accent = UIColor(red: 0.08, green: 1.00, blue: 0.86, alpha: 1.00)
+        static let accent = UIColor(red: 0.28, green: 0.8, blue: 0.86, alpha: 1.00)
     }
     
     // MARK: - Fonts environement
@@ -31,10 +29,8 @@ enum Constants {
         static let smallPadding: CGFloat = 14
         static let smallElementHeight: CGFloat = 42
         static let smallCornerRadius: CGFloat = 18
-        
         static let mediumPadding: CGFloat = 40
         static let mediumCornerRadius: CGFloat = 26
-        
         static let defaultBorderWidth: CGFloat = 2
         static let emdededContentMultiplier: CGFloat = 0.84
     }
