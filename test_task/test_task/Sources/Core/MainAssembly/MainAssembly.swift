@@ -7,11 +7,16 @@ final class MainAssembly {
     // MARK: - Register all dependencies
     
     static func registerDependencies() {
-        DependencyContainer.shared.register(type: SearchTabInput.self, component: SearchTabPresenter())
+        let presenter = SearchTabPresenter()
+        DependencyContainer.shared.register(type: SearchTabSelectedImageInput.self, component: presenter)
+        DependencyContainer.shared.register(type: SearchTabInput.self, component: presenter)
         DependencyContainer.shared.register(type: SearchTabOutput.self, component: SearchTabViewController())
         
         DependencyContainer.shared.register(type: FavoritesTabInput.self, component: FavoritesTabPresenter())
         DependencyContainer.shared.register(type: FavoritesTabOutput.self, component: FavoritesTabViewController())
+        
+        DependencyContainer.shared.register(type: NetworkServiceProtocol.self, component: NetworkService())
+        DependencyContainer.shared.register(type: StorageDataServiceProtocol.self, component: StorageDataService())
     }
     
     // MARK: - Create main viewController

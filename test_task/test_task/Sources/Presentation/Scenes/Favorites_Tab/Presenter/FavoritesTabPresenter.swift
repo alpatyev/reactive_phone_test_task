@@ -13,7 +13,6 @@ protocol FavoritesTabInput {
 // MARK: - Favorites tab presenter
 
 final class FavoritesTabPresenter {
-    
     private var view: FavoritesTabOutput?
     private var stateModel: FavoritesTabStateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
     private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list
@@ -27,23 +26,7 @@ extension FavoritesTabPresenter: FavoritesTabInput {
         view?.updateNavigationBarState(with: .list)
         view?.updateState(with: stateModel)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            guard let img = UIImage(named: "star.fill") else { return }
-            guard let data = img.pngData() else { return }
-            
-            self.view?.updateState(with: .itemList([ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540")]))
-        }
+        view?.updateState(with: .itemList([ImageItemModel(imageData: (UIImage(named: "star.fill")?.pngData())!, prompt: "хуй")]))
     }
     
     func viewDisappeared() {
@@ -51,8 +34,12 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     }
     
     func selectedItem(_ value: ImageItemModel) {
-        print(value)
         view?.toggleUserInteractions(with: false)
+        
+        if let tabPresenter = DependencyContainer.shared.resolve(type: SearchTabSelectedImageInput.self) {
+            tabPresenter.selectedImage(item: value)
+            view?.selectedTabBarIndex(0)
+        }
     }
     
     func tappedInfoButton() {
