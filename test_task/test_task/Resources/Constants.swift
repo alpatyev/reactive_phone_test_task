@@ -68,7 +68,9 @@ enum Constants {
         }
     }
     
+    // MARK: - Logic environement
+    
     enum Logic {
-        static let imageItemsLimit: Int = 5
+        static let imageItemsLimit: Int = 20
     }
  }

@@ -36,7 +36,7 @@ final class StorageDataService: StorageDataServiceProtocol {
         let container = NSPersistentContainer(name: "ImageDataModel")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
-                print("ERROR: \(error), \(error.userInfo)")
+                print("* COREDATA (ImageDataModel) CONTAINER ERROR: \(error), \(error.userInfo)")
             }
         }
         return container
@@ -48,7 +48,6 @@ final class StorageDataService: StorageDataServiceProtocol {
     
     func cutByLimitIfNeeded(_ count: Int) {
         guard count > objectsLimit else { return }
-        print(String(count) + " <<<<<<")
         if let IDs = attemptToRemoveOldestMetadata() {
             for id in IDs {
                 print(id)
@@ -175,12 +174,12 @@ final class StorageDataService: StorageDataServiceProtocol {
                 return list.reversed()
             } else {
                 print("* COREDATA - EMPTY IMG METADATA MODELS")
-                return nil
             }
         } catch {
             print("* COREDATA - FAILED TO FETCH ALL: \(error.localizedDescription)")
-            return nil
         }
+        
+        return nil
     }
     
     private func attemptToRemoveOldestMetadata() -> [UUID]? {
@@ -210,6 +209,7 @@ final class StorageDataService: StorageDataServiceProtocol {
         } catch let error as NSError {
             print("* COREDATA SORTING ERROR : \(error.localizedDescription)")
         }
+        
         return nil
     }
     
@@ -276,6 +276,7 @@ final class StorageDataService: StorageDataServiceProtocol {
                 print("* COREDATA - SAVING ERROR: \(error.localizedDescription)")
             }
         }
+        
         return false
     }
 }

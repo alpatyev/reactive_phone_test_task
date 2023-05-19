@@ -9,7 +9,6 @@
 "Search_Tab.clearDataButton" = "Delete all saved data";
 "Search_Tab.noImageFounded" = "Sorry, image might not exists.";
 
-
 // MARK: - Text for Favorites_Tab
 
 "Favorites_Tab.navigationTitle" = "Favorites";

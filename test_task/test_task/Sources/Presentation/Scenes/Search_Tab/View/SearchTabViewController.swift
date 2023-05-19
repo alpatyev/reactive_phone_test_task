@@ -92,7 +92,7 @@ final class SearchTabViewController: UIViewController {
     private lazy var clearDataButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constants.Text.Search_Tab.clearDataButton, for: .normal)
-        button.setTitleColor(Constants.Colors.secondaryText, for: .normal)
+        button.setTitleColor(Constants.Colors.secondaryText.withAlphaComponent(0.4), for: .normal)
         button.setTitleColor(Constants.Colors.accent, for: .highlighted)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)

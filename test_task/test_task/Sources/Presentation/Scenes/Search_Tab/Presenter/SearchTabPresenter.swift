@@ -26,11 +26,7 @@ final class SearchTabPresenter {
     private weak var view: SearchTabOutput?
     private var networkService: NetworkServiceProtocol?
     private var storageService: StorageDataServiceProtocol?
-    private var imageItemModel = ImageItemModel(id: UUID(), imageData: Data(), prompt: String()) {
-        didSet {
-            print(imageItemModel.id)
-        }
-    }
+    private var imageItemModel = ImageItemModel(id: UUID(), imageData: Data(), prompt: String())
 
     private var isRemoveButtonEnabled = true {
         didSet {
@@ -40,7 +36,6 @@ final class SearchTabPresenter {
     
     private var stateModel = SearchTabStateModel.noImage(String()) {
         didSet {
-            print(stateModel)
             view?.updateState(with: stateModel)
         }
     }
@@ -81,18 +76,20 @@ extension SearchTabPresenter: SearchTabInput {
     }
     
     func clearAllDataButtonTapped() {
+        isRemoveButtonEnabled = false
         storageService?.removeAllData()
     }
     
     func textFieldReturned(_ value: String?) {
         guard let searchText = value else { return }
-        guard storageService?.containsPrompt(with: searchText.trimmingCharacters(in: .whitespaces)) == false else { return }
-        
+        let trimmedPrompt = searchText.trimmingCharacters(in: .whitespaces)
+        guard storageService?.containsPrompt(with: trimmedPrompt) == false else { return }
         stateModel = .loading
-        networkService?.fetchImage(with: searchText.trimmingCharacters(in: .whitespaces)) { [weak self] data in
+        
+        networkService?.fetchImage(with: trimmedPrompt) { [weak self] data in
             DispatchQueue.main.async {
                 if let imageData = data {
-                    self?.imageItemModel = ImageItemModel(id: UUID(), imageData: imageData, prompt: searchText)
+                    self?.imageItemModel = ImageItemModel(id: UUID(), imageData: imageData, prompt: trimmedPrompt)
                     self?.stateModel = .loadedImage(imageData)
                     self?.isRemoveButtonEnabled = false
                 } else {
