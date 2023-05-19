@@ -10,7 +10,7 @@ protocol StorageDataServiceProtocol: AnyObject {
     func containsID(with value: UUID) -> Bool
     func fetchAllSortedImageItemModels() -> [ImageItemModel]
     func fetchImageItemModel(with id: UUID) -> ImageItemModel?
-    
+    func fetchImageItemModel(with prompt: String) -> ImageItemModel?
     func saveImageItemModel(model: ImageItemModel, timeStamp: Date)
     
     func removeImageData(with id: UUID)
@@ -65,11 +65,22 @@ final class StorageDataService: StorageDataServiceProtocol {
     }
     
     func fetchImageItemModel(with id: UUID) -> ImageItemModel? {
-        guard let firstMatchObject = attemptSearchToByID(value: id) else { return nil }
+        guard let firstMatchObject = attemptSearchByID(value: id) else { return nil }
         
         if let imageData = attemptToFetchImageData(with: id),
            let prompt = firstMatchObject.prompt,
            let id = firstMatchObject.id {
+            return ImageItemModel(id: id, imageData: imageData, prompt: prompt)
+        } else {
+            return nil
+        }
+    }
+    
+    func fetchImageItemModel(with prompt: String) -> ImageItemModel? {
+        guard let firstMatchObject = attemptSearchByPrompt(value: prompt) else { return nil }
+        
+        if let id = firstMatchObject.id,
+           let imageData = attemptToFetchImageData(with: id) {
             return ImageItemModel(id: id, imageData: imageData, prompt: prompt)
         } else {
             return nil
@@ -106,12 +117,10 @@ final class StorageDataService: StorageDataServiceProtocol {
         attemptToRemoveImageData(with: id)
         attemptToRemoveImageMetaData(with: id)
     }
-
     
     func removeAllData() {
         attemptToDeleteAllData()
     }
-    
   
     // MARK: - FileManager methods
     
@@ -163,7 +172,6 @@ final class StorageDataService: StorageDataServiceProtocol {
         } catch {
             print("* COREDATA REMOVING ERROR: \(error)")
         }
-        
     }
     
     private func attemptTofetchAllImagesMetaData() -> [ImageMetadata]? {
@@ -250,9 +258,25 @@ final class StorageDataService: StorageDataServiceProtocol {
         }
     }
     
-    private func attemptSearchToByID(value: UUID) -> ImageMetadata? {
+    private func attemptSearchByID(value: UUID) -> ImageMetadata? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
         let predicate = NSPredicate(format: "id == %@", value.uuidString)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let entities = try currentContext.fetch(fetchRequest) as? [ImageMetadata] {
+                return entities.first
+            }
+        } catch {
+            print("SEARCH ERROR: \(error)")
+        }
+        
+        return nil
+    }
+    
+    private func attemptSearchByPrompt(value: String) -> ImageMetadata? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
+        let predicate = NSPredicate(format: "prompt == %@", value)
         fetchRequest.predicate = predicate
         
         do {

@@ -39,7 +39,6 @@ final class SearchTabPresenter {
             view?.updateState(with: stateModel)
         }
     }
-    
 }
 
 // MARK: - Search tab output impl
@@ -83,9 +82,10 @@ extension SearchTabPresenter: SearchTabInput {
     func textFieldReturned(_ value: String?) {
         guard let searchText = value else { return }
         let trimmedPrompt = searchText.trimmingCharacters(in: .whitespaces)
-        guard storageService?.containsPrompt(with: trimmedPrompt) == false else { return }
-        stateModel = .loading
+        guard cannotUpdateFromCoreData(with: trimmedPrompt) else { view?.closeKeyboard(); return }
         
+        stateModel = .loading
+        print(searchText)
         networkService?.fetchImage(with: trimmedPrompt) { [weak self] data in
             DispatchQueue.main.async {
                 if let imageData = data {
@@ -98,6 +98,16 @@ extension SearchTabPresenter: SearchTabInput {
             }
         }
         view?.closeKeyboard()
+    }
+    
+    private func cannotUpdateFromCoreData(with propmpt: String) -> Bool {
+        if let model = storageService?.fetchImageItemModel(with: propmpt) {
+            imageItemModel = model
+            stateModel = .loadedImage(model.imageData)
+            return false
+        } else {
+            return true
+        }
     }
 }
 
