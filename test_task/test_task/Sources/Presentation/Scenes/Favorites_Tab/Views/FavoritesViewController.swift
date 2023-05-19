@@ -7,6 +7,7 @@ protocol FavoritesTabOutput: AnyObject {
     func updateNavigationBarState(with newState: NavigationBarInfoButtonStateModel)
     func toggleUserInteractions(with flag: Bool)
     func selectedTabBarIndex(_ index: Int)
+    func removeItemData()
 }
 
 // MARK: - Favorites tab ViewController
@@ -54,6 +55,11 @@ final class FavoritesTabViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         presenter?.viewDisappeared()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewAppearedWithElements(itemModelsList.count)
     }
     
     // MARK: - Setups
@@ -153,8 +159,8 @@ extension FavoritesTabViewController: FavoritesTabOutput {
     
     func updateNavigationBarState(with newState: NavigationBarInfoButtonStateModel) {
         switch newState {
-            case .info(let message):
-                performNavigationBarInfoState(message)
+            case .info:
+                performNavigationBarInfoState()
             case .list:
                 performNavigationBarListState()
         }
@@ -162,6 +168,11 @@ extension FavoritesTabViewController: FavoritesTabOutput {
     
     func selectedTabBarIndex(_ index: Int) {
         tabBarController?.selectedIndex = index
+    }
+    
+    func removeItemData() {
+        itemModelsList.removeAll()
+        favoritesList.reloadData()
     }
     
     private func performEmptyState(_ message: String) {
@@ -179,18 +190,11 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         favoritesList.reloadData()
     }
     
-    private func performNavigationBarInfoState(_ message: String) {
-        favoritesList.isHidden = true
-        listStatusLabel.isHidden = false
-        listStatusLabel.text = message
-        
+    private func performNavigationBarInfoState() {
         navigationItem.rightBarButtonItem?.image = UIImage(named: Constants.ImageNames.list)
     }
     
     private func performNavigationBarListState() {
-        favoritesList.isHidden = false
-        listStatusLabel.isHidden = true
-        
         navigationItem.rightBarButtonItem?.image = UIImage(named: Constants.ImageNames.info)
     }
 }

@@ -4,20 +4,24 @@ import CoreData
 // MARK: - Storage data service protocol
 
 protocol StorageDataServiceProtocol: AnyObject {
-    func setObjectsLimit(value: Int)
-    func cutByLimitIfNeeded()
-    
-    func fetchAllPrompts() -> [String]
-    func saveImageItemModel(model: ImageItemModel, timeStamp: Date, id: UUID)
+    func cutByLimitIfNeeded(_ count: Int)
+
+    func containsPrompt(with text: String) -> Bool
+    func containsID(with value: UUID) -> Bool
     func fetchAllSortedImageItemModels() -> [ImageItemModel]
+    func fetchImageItemModel(with id: UUID) -> ImageItemModel?
+    
+    func saveImageItemModel(model: ImageItemModel, timeStamp: Date)
+    
+    func removeImageData(with id: UUID)
     func removeAllData()
 }
 
 // MARK: - Storage data service
 
 final class StorageDataService: StorageDataServiceProtocol {
-  
-    private var objectsLimit: Int = 0
+
+    private var objectsLimit: Int = Constants.Logic.imageItemsLimit
     
     // MARK: - FileManager properties
 
@@ -42,28 +46,45 @@ final class StorageDataService: StorageDataServiceProtocol {
     
     // MARK: - Service interface
     
-    func setObjectsLimit(value: Int) {
-        objectsLimit = value > 0 ? value : 0
-    }
-    
-    func cutByLimitIfNeeded() {
+    func cutByLimitIfNeeded(_ count: Int) {
+        guard count > objectsLimit else { return }
+        print(String(count) + " <<<<<<")
         if let IDs = attemptToRemoveOldestMetadata() {
             for id in IDs {
+                print(id)
                 attemptToRemoveImageData(with: id)
             }
         }
     }
     
-    func fetchIDList() -> UUID // set
-    
-    func fetchPromptByID() -> [String] {
-        guard let metadataList = attemptTofetchAllImagesMetaData() else { return [] }
-        return metadataList.compactMap { $0.promt }
+    func containsPrompt(with text: String) -> Bool {
+        attemptTofetchAllImagesMetaData()?.contains { $0.prompt == text } ?? false
     }
     
-    func saveImageItemModel(model: ImageItemModel, timeStamp: Date, id: UUID) {
-        if attemptToSaveImageObject(id: id, timeStamp: timeStamp, prompt: model.prompt) {
-            attempToSaveImageData(data: model.imageData, with: id)
+    func containsID(with value: UUID) -> Bool {
+        attemptTofetchAllImagesMetaData()?.contains { $0.id == value } ?? false
+    }
+    
+    func fetchImageItemModel(with id: UUID) -> ImageItemModel? {
+        guard let firstMatchObject = attemptSearchToByID(value: id) else { return nil }
+        
+        if let imageData = attemptToFetchImageData(with: id),
+           let prompt = firstMatchObject.prompt,
+           let id = firstMatchObject.id {
+            return ImageItemModel(id: id, imageData: imageData, prompt: prompt)
+        } else {
+            return nil
+        }
+    }
+
+    func fetchAllPrompts() -> [String] {
+        guard let metadataList = attemptTofetchAllImagesMetaData() else { return [] }
+        return metadataList.compactMap { $0.prompt }
+    }
+    
+    func saveImageItemModel(model: ImageItemModel, timeStamp: Date) {
+        if attemptToSaveImageObject(id: model.id, prompt: model.prompt, timeStamp: timeStamp) {
+            attempToSaveImageData(data: model.imageData, with: model.id)
         }
     }
     
@@ -73,14 +94,20 @@ final class StorageDataService: StorageDataServiceProtocol {
         
         for metadata in metadataList {
             guard let id = metadata.id else { continue }
-            guard let prompt = metadata.promt else { continue }
+            guard let prompt = metadata.prompt else { continue }
             guard let imageData = attemptToFetchImageData(with: id) else { continue }
             
-            modelsList.append(ImageItemModel(imageData: imageData, prompt: prompt))
+            modelsList.append(ImageItemModel(id: id, imageData: imageData, prompt: prompt))
         }
         
         return modelsList
     }
+    
+    func removeImageData(with id: UUID) {
+        attemptToRemoveImageData(with: id)
+        attemptToRemoveImageMetaData(with: id)
+    }
+
     
     func removeAllData() {
         attemptToDeleteAllData()
@@ -90,7 +117,7 @@ final class StorageDataService: StorageDataServiceProtocol {
     // MARK: - FileManager methods
     
     private func attemptToFetchImageData(with id: UUID) -> Data? {
-        guard let imagePath = imagePathFromID(String(id.hashValue)) else { return nil }
+        guard let imagePath = imagePathFromID(id.uuidString) else { return nil }
         
         do {
             return try Data(contentsOf: imagePath)
@@ -101,7 +128,7 @@ final class StorageDataService: StorageDataServiceProtocol {
     }
     
     private func attemptToRemoveImageData(with id: UUID) {
-        guard let imagePath = imagePathFromID(String(id.hashValue)) else { return }
+        guard let imagePath = imagePathFromID(id.uuidString) else { return }
         
         do {
             try FileManager.default.removeItem(at: imagePath)
@@ -111,23 +138,41 @@ final class StorageDataService: StorageDataServiceProtocol {
     }
     
     private func attempToSaveImageData(data: Data, with id: UUID) {
-        guard let imagePath = imagePathFromID(String(id.hashValue)) else { return }
+        guard let imagePath = imagePathFromID(id.uuidString) else { return }
         
         do {
             try data.write(to: imagePath)
         } catch {
-            print("FILEMANAGER : FAILED TO SAVE \(id.hashValue).jpg: \(error.localizedDescription)")
+            print("FILEMANAGER : FAILED TO SAVE \(id.uuidString).jpg: \(error.localizedDescription)")
         }
     }
 
     // MARK: - CoreData methods
+    
+    private func attemptToRemoveImageMetaData(with id: UUID) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
+        let predicate = NSPredicate(format: "id == %@", id.uuidString)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let entities = try currentContext.fetch(fetchRequest) as? [ImageMetadata] {
+                if let firstMatch = entities.first {
+                    currentContext.delete(firstMatch)
+                    _ = contextSuccessfullySaved()
+                }
+            }
+        } catch {
+            print("* COREDATA REMOVING ERROR: \(error)")
+        }
+        
+    }
     
     private func attemptTofetchAllImagesMetaData() -> [ImageMetadata]? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
         
         do {
             if let list = try currentContext.fetch(fetchRequest) as? [ImageMetadata], !list.isEmpty {
-                return list
+                return list.reversed()
             } else {
                 print("* COREDATA - EMPTY IMG METADATA MODELS")
                 return nil
@@ -150,7 +195,8 @@ final class StorageDataService: StorageDataServiceProtocol {
             var imageDataIDs = [UUID]()
             
             if objects.count > objectsLimit {
-                for i in 50..<objects.count {
+                print(objects.count, objectsLimit)
+                for i in objectsLimit..<objects.count {
                     if let id = objects[i].id {
                         imageDataIDs.append(id)
                         currentContext.delete(objects[i])
@@ -158,21 +204,25 @@ final class StorageDataService: StorageDataServiceProtocol {
                 }
             }
             
-            return imageDataIDs
+            if contextSuccessfullySaved() {
+                return imageDataIDs
+            }
         } catch let error as NSError {
             print("* COREDATA SORTING ERROR : \(error.localizedDescription)")
-            return nil
         }
+        return nil
     }
     
-    private func attemptToSaveImageObject(id: UUID, timeStamp: Date, prompt: String) -> Bool {
+    private func attemptToSaveImageObject(id: UUID, prompt: String, timeStamp: Date) -> Bool {
         guard let entity = NSEntityDescription.entity(forEntityName: "ImageMetadata", in: currentContext) else {
             return false
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let object = NSManagedObject(entity: entity, insertInto: currentContext)
-        object.setValue(id.hashValue, forKey: "id")
-        object.setValue(timeStamp, forKey: "timeStamp")
+        object.setValue(NSUUID(uuidString: id.uuidString), forKey: "id")
+        object.setValue(dateFormatter.string(from: Date()), forKey: "timeStamp")
         object.setValue(prompt, forKey: "prompt")
         
         return contextSuccessfullySaved()
@@ -198,6 +248,22 @@ final class StorageDataService: StorageDataServiceProtocol {
         } catch let error {
             print("DELETING ERROR : \(error)")
         }
+    }
+    
+    private func attemptSearchToByID(value: UUID) -> ImageMetadata? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
+        let predicate = NSPredicate(format: "id == %@", value.uuidString)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let entities = try currentContext.fetch(fetchRequest) as? [ImageMetadata] {
+                return entities.first
+            }
+        } catch {
+            print("SEARCH ERROR: \(error)")
+        }
+        
+        return nil
     }
     
     private func contextSuccessfullySaved() -> Bool {

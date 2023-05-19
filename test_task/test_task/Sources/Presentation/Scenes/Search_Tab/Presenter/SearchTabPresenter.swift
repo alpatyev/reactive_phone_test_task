@@ -8,7 +8,7 @@ protocol SearchTabInput {
     func tappedSomewhere()
     func saveButtonTapped()
     func removeButtonTapped()
-    func randomButtonTapped()
+    func clearAllDataButtonTapped()
     
     func textFieldReturned(_ value: String?)
 }
@@ -26,6 +26,18 @@ final class SearchTabPresenter {
     private weak var view: SearchTabOutput?
     private var networkService: NetworkServiceProtocol?
     private var storageService: StorageDataServiceProtocol?
+    private var imageItemModel = ImageItemModel(id: UUID(), imageData: Data(), prompt: String()) {
+        didSet {
+            print(imageItemModel.id)
+        }
+    }
+
+    private var isRemoveButtonEnabled = true {
+        didSet {
+            view?.setRemoveButtonEnabled(isRemoveButtonEnabled)
+        }
+    }
+    
     private var stateModel = SearchTabStateModel.noImage(String()) {
         didSet {
             print(stateModel)
@@ -53,31 +65,41 @@ extension SearchTabPresenter: SearchTabInput {
     }
     
     func saveButtonTapped() {
-        print(#function)
+        DispatchQueue.main.async { [weak self] in
+            if let model = self?.imageItemModel,
+               let storageServicePointer = self?.storageService,
+                !storageServicePointer.containsID(with: model.id) {
+                storageServicePointer.saveImageItemModel(model: model, timeStamp: Date())
+            }
+            self?.isRemoveButtonEnabled = true
+        }
     }
     
     func removeButtonTapped() {
-        print(#function)
+        isRemoveButtonEnabled = false
+        storageService?.removeImageData(with: imageItemModel.id)
     }
     
-    func randomButtonTapped() {
-        print(#function)
+    func clearAllDataButtonTapped() {
+        storageService?.removeAllData()
     }
     
     func textFieldReturned(_ value: String?) {
         guard let searchText = value else { return }
+        guard storageService?.containsPrompt(with: searchText.trimmingCharacters(in: .whitespaces)) == false else { return }
         
         stateModel = .loading
         networkService?.fetchImage(with: searchText.trimmingCharacters(in: .whitespaces)) { [weak self] data in
             DispatchQueue.main.async {
                 if let imageData = data {
+                    self?.imageItemModel = ImageItemModel(id: UUID(), imageData: imageData, prompt: searchText)
                     self?.stateModel = .loadedImage(imageData)
+                    self?.isRemoveButtonEnabled = false
                 } else {
-                    self?.stateModel = .noImage(String())
+                    self?.stateModel = .noImage(Constants.Text.Search_Tab.noImageFounded)
                 }
             }
         }
-        
         view?.closeKeyboard()
     }
 }
@@ -86,6 +108,7 @@ extension SearchTabPresenter: SearchTabInput {
 
 extension SearchTabPresenter: SearchTabSelectedImageInput {
     func selectedImage(item: ImageItemModel) {
+        imageItemModel = item
         stateModel = .loadedImage(item.imageData)
     }
 }
