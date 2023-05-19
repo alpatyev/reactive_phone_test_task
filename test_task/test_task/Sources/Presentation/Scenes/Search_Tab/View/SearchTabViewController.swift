@@ -41,6 +41,8 @@ final class SearchTabViewController: UIViewController {
     
     private lazy var imageContainer: UIImageView = {
         let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = Constants.Colors.backgroundAccent
         imageView.layer.borderWidth = Constants.Layout.defaultBorderWidth
         imageView.layer.cornerRadius = Constants.Layout.mediumCornerRadius
@@ -251,6 +253,7 @@ extension SearchTabViewController: SearchTabOutput {
         saveImageButton.isHidden = true
         removeImageButton.isHidden = true
         imageLoadingIndicator.stopAnimating()
+        imageContainer.image = UIImage()
     }
     
     private func performLoadingState() {

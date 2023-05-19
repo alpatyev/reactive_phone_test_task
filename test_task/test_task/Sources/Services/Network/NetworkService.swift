@@ -13,7 +13,6 @@ final class NetworkService: NetworkServiceProtocol {
     private let session = URLSession.shared
     
     func fetchImage(with prompt: String, _ completion: @escaping (Data?) -> ()) {
-        print(prompt)
         fetchFirstMatchingImageMetadata(with: prompt) { [weak self] result in
             if let metadata = result {
                 self?.downloadImageData(with: metadata) { completion($0) }

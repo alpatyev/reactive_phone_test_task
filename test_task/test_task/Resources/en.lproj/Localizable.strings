@@ -7,8 +7,11 @@
 "Search_Tab.saveButton" = "Save";
 "Search_Tab.removeButton" = "Remove";
 "Search_Tab.randomButton" = "Get random image";
+"Search_Tab.noImageFounded" = "Sorry, image might not exists.";
+
 
 // MARK: - Text for Favorites_Tab
 
 "Favorites_Tab.navigationTitle" = "Favorites";
 "Favorites_Tab.emptyListText" = "Sorry, we can`t find any images.\nTry to get it in search tab...";
+"Favorites_Tab.showInfo" = "You have been saved %d images. Total limit is %d.";

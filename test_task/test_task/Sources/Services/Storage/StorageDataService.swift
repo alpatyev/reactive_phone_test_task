@@ -54,7 +54,9 @@ final class StorageDataService: StorageDataServiceProtocol {
         }
     }
     
-    func fetchAllPrompts() -> [String] {
+    func fetchIDList() -> UUID // set
+    
+    func fetchPromptByID() -> [String] {
         guard let metadataList = attemptTofetchAllImagesMetaData() else { return [] }
         return metadataList.compactMap { $0.promt }
     }

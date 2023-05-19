@@ -17,11 +17,7 @@ final class DependencyContainer: DependencyContainerProtocol {
     
     // MARK: - Stored types
     
-    private var components: [String: AnyObject] = [:] {
-        didSet {
-            print(components)
-        }
-    }
+    private var components: [String: AnyObject] = [:] 
 
     // MARK: - Init
     

@@ -56,12 +56,15 @@ enum Constants {
             static let saveButton = NSLocalizedString("Search_Tab.saveButton", comment: "")
             static let removeButton = NSLocalizedString("Search_Tab.removeButton", comment: "")
             static let randomButton = NSLocalizedString("Search_Tab.randomButton", comment: "")
+            static let noImageFounded = NSLocalizedString("Search_Tab.noImageFounded", comment: "")
         }
         
         enum Favorites_Tab {
             static let navigationTitle = NSLocalizedString("Favorites_Tab.navigationTitle", comment: "")
             static let emptyListText = NSLocalizedString("Favorites_Tab.emptyListText", comment: "")
-
+            static var showInfo: (_ saved: Int, _ limit: Int) -> String = { saved, limit in
+                String(format: NSLocalizedString("Favorites_Tab.showInfo", comment: ""), saved, limit)
+            }
         }
     }
  }

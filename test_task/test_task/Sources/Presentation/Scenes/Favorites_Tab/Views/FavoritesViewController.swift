@@ -6,6 +6,7 @@ protocol FavoritesTabOutput: AnyObject {
     func updateState(with newState: FavoritesTabStateModel)
     func updateNavigationBarState(with newState: NavigationBarInfoButtonStateModel)
     func toggleUserInteractions(with flag: Bool)
+    func selectedTabBarIndex(_ index: Int)
 }
 
 // MARK: - Favorites tab ViewController
@@ -159,6 +160,9 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         }
     }
     
+    func selectedTabBarIndex(_ index: Int) {
+        tabBarController?.selectedIndex = index
+    }
     
     private func performEmptyState(_ message: String) {
         favoritesList.isHidden = true

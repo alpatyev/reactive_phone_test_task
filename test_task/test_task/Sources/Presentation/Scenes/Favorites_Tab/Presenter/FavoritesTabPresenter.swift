@@ -13,7 +13,6 @@ protocol FavoritesTabInput {
 // MARK: - Favorites tab presenter
 
 final class FavoritesTabPresenter {
-    
     private var view: FavoritesTabOutput?
     private var stateModel: FavoritesTabStateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
     private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list
@@ -26,6 +25,8 @@ extension FavoritesTabPresenter: FavoritesTabInput {
         view = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self)
         view?.updateNavigationBarState(with: .list)
         view?.updateState(with: stateModel)
+        
+        view?.updateState(with: .itemList([ImageItemModel(imageData: (UIImage(named: "star.fill")?.pngData())!, prompt: "хуй")]))
     }
     
     func viewDisappeared() {
@@ -33,8 +34,12 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     }
     
     func selectedItem(_ value: ImageItemModel) {
-        print(value)
         view?.toggleUserInteractions(with: false)
+        
+        if let tabPresenter = DependencyContainer.shared.resolve(type: SearchTabSelectedImageInput.self) {
+            tabPresenter.selectedImage(item: value)
+            view?.selectedTabBarIndex(0)
+        }
     }
     
     func tappedInfoButton() {
