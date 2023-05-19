@@ -56,6 +56,11 @@ final class FavoritesTabViewController: UIViewController {
         presenter?.viewDisappeared()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewAppeared()
+    }
+    
     // MARK: - Setups
     
     private func setupDependencies() {
@@ -177,6 +182,7 @@ extension FavoritesTabViewController: FavoritesTabOutput {
         
         itemModelsList = items
         favoritesList.reloadData()
+        presenter?.reportedDisplayedItemsCount(itemModelsList.count)
     }
     
     private func performNavigationBarInfoState(_ message: String) {

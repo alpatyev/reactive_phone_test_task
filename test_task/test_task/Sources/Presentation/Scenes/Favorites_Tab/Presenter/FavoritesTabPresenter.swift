@@ -5,7 +5,10 @@ import UIKit
 
 protocol FavoritesTabInput {
     func viewDidLoaded()
+    func viewAppeared()
     func viewDisappeared()
+    func reportedDisplayedItemsCount(_ count: Int)
+    
     func selectedItem(_ value: ImageItemModel)
     func tappedInfoButton()
 }
@@ -13,8 +16,11 @@ protocol FavoritesTabInput {
 // MARK: - Favorites tab presenter
 
 final class FavoritesTabPresenter {
+    private var itemsCountMessage = String()
     private var view: FavoritesTabOutput?
-    private var stateModel: FavoritesTabStateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
+    private var storageService: StorageDataServiceProtocol?
+    private var currentStatusMessage = Constants.Text.Favorites_Tab.emptyListText
+    private var stateModel: FavoritesTabStateModel = .message(String())
     private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list
 }
 
@@ -22,11 +28,21 @@ final class FavoritesTabPresenter {
 
 extension FavoritesTabPresenter: FavoritesTabInput {
     func viewDidLoaded() {
+        storageService = DependencyContainer.shared.resolve(type: StorageDataServiceProtocol.self)
         view = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self)
         view?.updateNavigationBarState(with: .list)
         view?.updateState(with: stateModel)
-        
-        view?.updateState(with: .itemList([ImageItemModel(imageData: (UIImage(named: "star.fill")?.pngData())!, prompt: "хуй")]))
+    }
+    
+    func viewAppeared() {
+        DispatchQueue.main.async { [weak self] in
+            if let items = self?.storageService?.fetchAllSortedImageItemModels(), !items.isEmpty {
+                self?.view?.updateState(with: .itemList(items))
+            } else {
+                self?.view?.updateState(with: .itemList([]))
+                self?.view?.updateState(with: .message(Constants.Text.Favorites_Tab.emptyListText))
+            }
+        }
     }
     
     func viewDisappeared() {
@@ -45,11 +61,20 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     func tappedInfoButton() {
         switch helperButtonStateModel {
             case .list:
-                helperButtonStateModel = .info("всего 5 айтемов")
+                helperButtonStateModel = .info(itemsCountMessage)
             case .info(_):
                 helperButtonStateModel = .list
         }
         
         view?.updateNavigationBarState(with: helperButtonStateModel)
+    }
+    
+    func reportedDisplayedItemsCount(_ count: Int) {
+        if count == 0 {
+            view?.updateState(with: .message(Constants.Text.Favorites_Tab.emptyListText))
+        }
+        
+        itemsCountMessage = Constants.Text.Favorites_Tab.showInfo(count, Constants.Logic.imageItemsLimit)
+        storageService?.cutByLimitIfNeeded(count)
     }
 }

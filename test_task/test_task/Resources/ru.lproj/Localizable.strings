@@ -6,11 +6,11 @@
 "Search_Tab.imageDefaultLabel" = "Попробуйте найти пару уникальных картинок!";
 "Search_Tab.saveButton" = "Сохранить";
 "Search_Tab.removeButton" = "Удалить";
-"Search_Tab.randomButton" = "Найти случайное изображение";
+"Search_Tab.clearDataButton" = "Удалить все сохраненные данные.";
 "Search_Tab.noImageFounded" = "Извините, но такое изображение не найдено.";
 
 // MARK: - Text for Favorites_Tab
 
 "Favorites_Tab.navigationTitle" = "Избранное";
 "Favorites_Tab.emptyListText" = "Извините, но у вас нет избранных картинок.\nПроверьте вкладку поиска...";
-"Favorites_Tab.showInfo" = "Вы сохранили %d изображений. Общий лимит %d.";
+"Favorites_Tab.showInfo" = "Сохранено %d. Общий лимит картинок %d.";

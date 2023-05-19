@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G527" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ImageMetadata" representedClassName="ImageMetadata" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="promt" optional="YES" attributeType="String"/>
+        <attribute name="prompt" optional="YES" attributeType="String"/>
         <attribute name="timeStamp" optional="YES" attributeType="String"/>
     </entity>
     <elements>

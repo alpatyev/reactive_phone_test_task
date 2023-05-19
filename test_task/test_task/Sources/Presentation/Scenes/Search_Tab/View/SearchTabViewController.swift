@@ -88,13 +88,13 @@ final class SearchTabViewController: UIViewController {
         return button
     }()
     
-    private lazy var randomImageButton: UIButton = {
+    private lazy var clearDataButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Constants.Text.Search_Tab.randomButton, for: .normal)
+        button.setTitle(Constants.Text.Search_Tab.clearDataButton, for: .normal)
         button.setTitleColor(Constants.Colors.secondaryText, for: .normal)
         button.setTitleColor(Constants.Colors.accent, for: .highlighted)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -137,7 +137,7 @@ final class SearchTabViewController: UIViewController {
         
         view.addSubview(saveImageButton)
         view.addSubview(removeImageButton)
-        view.addSubview(randomImageButton)
+        view.addSubview(clearDataButton)
     }
     
     private func setupLayout() {
@@ -204,12 +204,12 @@ final class SearchTabViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            randomImageButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+            clearDataButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                    constant: -Constants.Layout.smallPadding),
-            randomImageButton.widthAnchor.constraint(equalTo: view.widthAnchor,
+            clearDataButton.widthAnchor.constraint(equalTo: view.widthAnchor,
                                                      multiplier: Constants.Layout.emdededContentMultiplier),
-            randomImageButton.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight),
-            randomImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            clearDataButton.heightAnchor.constraint(equalToConstant: Constants.Layout.smallElementHeight),
+            clearDataButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
@@ -223,8 +223,8 @@ final class SearchTabViewController: UIViewController {
         presenter?.saveButtonTapped()
     }
     
-    @objc private func randomButtonTapped() {
-        presenter?.randomButtonTapped()
+    @objc private func clearButtonTapped() {
+        presenter?.clearAllDataButtonTapped()
     }
 }
 

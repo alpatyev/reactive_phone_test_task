@@ -55,7 +55,7 @@ enum Constants {
             static let imageDefaultLabel = NSLocalizedString("Search_Tab.imageDefaultLabel", comment: "")
             static let saveButton = NSLocalizedString("Search_Tab.saveButton", comment: "")
             static let removeButton = NSLocalizedString("Search_Tab.removeButton", comment: "")
-            static let randomButton = NSLocalizedString("Search_Tab.randomButton", comment: "")
+            static let clearDataButton = NSLocalizedString("Search_Tab.clearDataButton", comment: "")
             static let noImageFounded = NSLocalizedString("Search_Tab.noImageFounded", comment: "")
         }
         
@@ -66,5 +66,9 @@ enum Constants {
                 String(format: NSLocalizedString("Favorites_Tab.showInfo", comment: ""), saved, limit)
             }
         }
+    }
+    
+    enum Logic {
+        static let imageItemsLimit: Int = 20
     }
  }
