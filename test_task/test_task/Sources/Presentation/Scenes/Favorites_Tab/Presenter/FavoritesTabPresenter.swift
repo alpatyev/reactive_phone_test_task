@@ -26,24 +26,6 @@ extension FavoritesTabPresenter: FavoritesTabInput {
         view = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self)
         view?.updateNavigationBarState(with: .list)
         view?.updateState(with: stateModel)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            guard let img = UIImage(named: "star.fill") else { return }
-            guard let data = img.pngData() else { return }
-            
-            self.view?.updateState(with: .itemList([ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540"),
-                                                    ImageItemModel(imageData: data,
-                                                                   timeStamp: Date(),
-                                                                   prompt: "1209832-1059874-39857-9258709823709827540")]))
-        }
     }
     
     func viewDisappeared() {

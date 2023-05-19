@@ -12,6 +12,9 @@ final class MainAssembly {
         
         DependencyContainer.shared.register(type: FavoritesTabInput.self, component: FavoritesTabPresenter())
         DependencyContainer.shared.register(type: FavoritesTabOutput.self, component: FavoritesTabViewController())
+        
+        DependencyContainer.shared.register(type: NetworkServiceProtocol.self, component: NetworkService())
+        DependencyContainer.shared.register(type: StorageDataServiceProtocol.self, component: StorageDataService())
     }
     
     // MARK: - Create main viewController

@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Dependency container protocol
 
 protocol DependencyContainerProtocol {
-  func register<Component>(type: Component.Type, component: Any)
+  func register<Component>(type: Component.Type, component: AnyObject)
   func resolve<Component>(type: Component.Type) -> Component?
 }
 
@@ -17,7 +17,11 @@ final class DependencyContainer: DependencyContainerProtocol {
     
     // MARK: - Stored types
     
-    private var components: [String: Any] = [:]
+    private var components: [String: AnyObject] = [:] {
+        didSet {
+            print(components)
+        }
+    }
 
     // MARK: - Init
     
@@ -25,7 +29,7 @@ final class DependencyContainer: DependencyContainerProtocol {
     
     // MARK: - Register + resolve self/component methods
     
-    func register<Component>(type: Component.Type, component: Any) {
+    func register<Component>(type: Component.Type, component: AnyObject) {
         components["\(type)"] = component
     }
     

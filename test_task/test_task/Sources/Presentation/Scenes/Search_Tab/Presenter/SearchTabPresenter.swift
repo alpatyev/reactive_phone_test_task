@@ -25,6 +25,12 @@ final class SearchTabPresenter {
     
     private weak var view: SearchTabOutput?
     private var model = SearchTabStateModel.noImage(Constants.Text.Search_Tab.imageDefaultLabel)
+    private var networkService: NetworkServiceProtocol?
+    private var storageService: StorageDataServiceProtocol?
+    
+    init() {
+        
+    }
     
 }
 
@@ -32,6 +38,9 @@ final class SearchTabPresenter {
 
 extension SearchTabPresenter: SearchTabInput {
     func viewDidLoaded() {
+        networkService = DependencyContainer.shared.resolve(type: NetworkServiceProtocol.self)
+        storageService = DependencyContainer.shared.resolve(type: StorageDataServiceProtocol.self)
+                
         view = DependencyContainer.shared.resolve(type: SearchTabOutput.self)
         view?.updateState(with: model)
     }
@@ -56,7 +65,11 @@ extension SearchTabPresenter: SearchTabInput {
     
     func textFieldReturned(_ value: String?) {
         guard let searchText = value else { return }
-        print(searchText)
+        print(networkService)
+        networkService?.fetchImage(with: searchText) { imageData in
+            print(imageData ?? "no data")
+        }
+        
         view?.closeKeyboard()
     }
 }

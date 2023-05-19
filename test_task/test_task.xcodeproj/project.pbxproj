@@ -13,6 +13,10 @@
 		643CD4082A16669D004E8AAF /* ImageItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD4072A16669D004E8AAF /* ImageItemModel.swift */; };
 		643CD40B2A166F80004E8AAF /* UITableViewCell_setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */; };
 		643CD40D2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40C2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift */; };
+		643CD4102A168B11004E8AAF /* ImageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 643CD40E2A168B10004E8AAF /* ImageDataModel.xcdatamodeld */; };
+		645C8EB42A177B2B00B5DAB5 /* ImageDataModel_converted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645C8EB32A177B2B00B5DAB5 /* ImageDataModel_converted.swift */; };
+		645C8EB62A179DE800B5DAB5 /* ImageURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645C8EB52A179DE800B5DAB5 /* ImageURLBuilder.swift */; };
+		645C8EB82A179F3600B5DAB5 /* NetworkModelsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645C8EB72A179F3600B5DAB5 /* NetworkModelsList.swift */; };
 		649177102A15835100CFB00F /* UITextField_setPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */; };
 		6491771B2A158BDB00CFB00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6491771D2A158BDB00CFB00F /* Localizable.strings */; };
 		649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649177202A15AFA200CFB00F /* SearchTabStateModel.swift */; };
@@ -39,6 +43,10 @@
 		643CD4072A16669D004E8AAF /* ImageItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemModel.swift; sourceTree = "<group>"; };
 		643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell_setup.swift; sourceTree = "<group>"; };
 		643CD40C2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarInfoButtonStateModel.swift; sourceTree = "<group>"; };
+		643CD40F2A168B11004E8AAF /* ImageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDataModel.xcdatamodel; sourceTree = "<group>"; };
+		645C8EB32A177B2B00B5DAB5 /* ImageDataModel_converted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataModel_converted.swift; sourceTree = "<group>"; };
+		645C8EB52A179DE800B5DAB5 /* ImageURLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageURLBuilder.swift; sourceTree = "<group>"; };
+		645C8EB72A179F3600B5DAB5 /* NetworkModelsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModelsList.swift; sourceTree = "<group>"; };
 		6491770F2A15835100CFB00F /* UITextField_setPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_setPlaceholder.swift; sourceTree = "<group>"; };
 		6491771C2A158BDB00CFB00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6491771E2A158BDE00CFB00F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -98,6 +106,7 @@
 				643CD3FD2A165A76004E8AAF /* UIViewController_setups.swift */,
 				643CD4022A1664A3004E8AAF /* UILabel_setStandardAppearance.swift */,
 				643CD40A2A166F80004E8AAF /* UITableViewCell_setup.swift */,
+				645C8EB32A177B2B00B5DAB5 /* ImageDataModel_converted.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -182,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				64FA1E582A14F3F400E4635F /* NetworkService.swift */,
+				645C8EB52A179DE800B5DAB5 /* ImageURLBuilder.swift */,
+				645C8EB72A179F3600B5DAB5 /* NetworkModelsList.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -190,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				64FA1E562A14F39D00E4635F /* StorageDataService.swift */,
+				643CD40E2A168B10004E8AAF /* ImageDataModel.xcdatamodeld */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -368,14 +380,18 @@
 				64FA1E552A14F36A00E4635F /* DependencyContainer.swift in Sources */,
 				643CD3FE2A165A76004E8AAF /* UIViewController_setups.swift in Sources */,
 				64FA1E672A14FB6600E4635F /* FavoritesViewController.swift in Sources */,
+				643CD4102A168B11004E8AAF /* ImageDataModel.xcdatamodeld in Sources */,
+				645C8EB42A177B2B00B5DAB5 /* ImageDataModel_converted.swift in Sources */,
 				643CD40D2A167E71004E8AAF /* NavigationBarInfoButtonStateModel.swift in Sources */,
 				64FA1E6C2A150DBF00E4635F /* MainAssembly.swift in Sources */,
 				64FA1E2E2A14E52600E4635F /* AppDelegate.swift in Sources */,
 				64FA1E652A14FB3F00E4635F /* FavoritesTabPresenter.swift in Sources */,
 				649177212A15AFA200CFB00F /* SearchTabStateModel.swift in Sources */,
 				64FA1E4B2A14E7CE00E4635F /* Constants.swift in Sources */,
+				645C8EB62A179DE800B5DAB5 /* ImageURLBuilder.swift in Sources */,
 				64FA1E572A14F39D00E4635F /* StorageDataService.swift in Sources */,
 				64FA1E632A14FAFD00E4635F /* SearchTabPresenter.swift in Sources */,
+				645C8EB82A179F3600B5DAB5 /* NetworkModelsList.swift in Sources */,
 				64FA1E692A14FC0400E4635F /* SearchTabViewController.swift in Sources */,
 				643CD4032A1664A3004E8AAF /* UILabel_setStandardAppearance.swift in Sources */,
 				643CD40B2A166F80004E8AAF /* UITableViewCell_setup.swift in Sources */,
@@ -601,6 +617,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		643CD40E2A168B10004E8AAF /* ImageDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				643CD40F2A168B11004E8AAF /* ImageDataModel.xcdatamodel */,
+			);
+			currentVersion = 643CD40F2A168B11004E8AAF /* ImageDataModel.xcdatamodel */;
+			path = ImageDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 64FA1E222A14E52600E4635F /* Project object */;
 }

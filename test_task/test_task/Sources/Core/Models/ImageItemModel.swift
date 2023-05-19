@@ -4,6 +4,5 @@ import Foundation
 
 struct ImageItemModel {
     let imageData: Data
-    let timeStamp: Date
     let prompt: String
 }
