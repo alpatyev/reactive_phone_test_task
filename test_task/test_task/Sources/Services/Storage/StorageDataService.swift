@@ -48,7 +48,7 @@ final class StorageDataService: StorageDataServiceProtocol {
     
     func cutByLimitIfNeeded(_ count: Int) {
         guard count > objectsLimit else { return }
-        
+        print(String(count) + " <<<<<<")
         if let IDs = attemptToRemoveOldestMetadata() {
             for id in IDs {
                 print(id)
@@ -105,6 +105,7 @@ final class StorageDataService: StorageDataServiceProtocol {
     
     func removeImageData(with id: UUID) {
         attemptToRemoveImageData(with: id)
+        attemptToRemoveImageMetaData(with: id)
     }
 
     
@@ -148,12 +149,30 @@ final class StorageDataService: StorageDataServiceProtocol {
 
     // MARK: - CoreData methods
     
+    private func attemptToRemoveImageMetaData(with id: UUID) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
+        let predicate = NSPredicate(format: "id == %@", id.uuidString)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let entities = try currentContext.fetch(fetchRequest) as? [ImageMetadata] {
+                if let firstMatch = entities.first {
+                    currentContext.delete(firstMatch)
+                    _ = contextSuccessfullySaved()
+                }
+            }
+        } catch {
+            print("* COREDATA REMOVING ERROR: \(error)")
+        }
+        
+    }
+    
     private func attemptTofetchAllImagesMetaData() -> [ImageMetadata]? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageMetadata")
         
         do {
             if let list = try currentContext.fetch(fetchRequest) as? [ImageMetadata], !list.isEmpty {
-                return list
+                return list.reversed()
             } else {
                 print("* COREDATA - EMPTY IMG METADATA MODELS")
                 return nil
@@ -177,7 +196,7 @@ final class StorageDataService: StorageDataServiceProtocol {
             
             if objects.count > objectsLimit {
                 print(objects.count, objectsLimit)
-                for i in (objectsLimit - 1)..<objects.count {
+                for i in objectsLimit..<objects.count {
                     if let id = objects[i].id {
                         imageDataIDs.append(id)
                         currentContext.delete(objects[i])

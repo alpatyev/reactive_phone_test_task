@@ -5,6 +5,7 @@ import UIKit
 protocol SearchTabOutput: AnyObject {
     func closeKeyboard()
     func updateState(with newState: SearchTabStateModel)
+    func setRemoveButtonEnabled(_ flag: Bool)
 }
 
 // MARK: - Search tab ViewController
@@ -239,12 +240,27 @@ extension SearchTabViewController: SearchTabOutput {
                 performLoadingState()
             case .loadedImage(let imageData):
                 performLoadedImageState(imageData)
-             
         }
     }
     
     func closeKeyboard() {
         view.endEditing(true)
+    }
+    
+    func setRemoveButtonEnabled(_ flag: Bool) {
+        flag ? performStandardRemoveButton() : performDisabledRemoveButton()
+    }
+        
+    private func performStandardRemoveButton() {
+        removeImageButton.isUserInteractionEnabled = true
+        removeImageButton.highlightable(accentColor: Constants.Colors.destructive,
+                                        title: Constants.Text.Search_Tab.removeButton)
+    }
+    
+    private func performDisabledRemoveButton(){
+        removeImageButton.isUserInteractionEnabled = false
+        removeImageButton.highlightable(accentColor: Constants.Colors.backgroundAccent,
+                                        title: Constants.Text.Search_Tab.removeButton)
     }
     
     private func performNoImageState(_ label: String) {

@@ -26,7 +26,18 @@ final class SearchTabPresenter {
     private weak var view: SearchTabOutput?
     private var networkService: NetworkServiceProtocol?
     private var storageService: StorageDataServiceProtocol?
-    private var imageItemModel = ImageItemModel(id: UUID(), imageData: Data(), prompt: String())
+    private var imageItemModel = ImageItemModel(id: UUID(), imageData: Data(), prompt: String()) {
+        didSet {
+            print(imageItemModel.id)
+        }
+    }
+
+    private var isRemoveButtonEnabled = true {
+        didSet {
+            view?.setRemoveButtonEnabled(isRemoveButtonEnabled)
+        }
+    }
+    
     private var stateModel = SearchTabStateModel.noImage(String()) {
         didSet {
             print(stateModel)
@@ -60,10 +71,12 @@ extension SearchTabPresenter: SearchTabInput {
                 !storageServicePointer.containsID(with: model.id) {
                 storageServicePointer.saveImageItemModel(model: model, timeStamp: Date())
             }
+            self?.isRemoveButtonEnabled = true
         }
     }
     
     func removeButtonTapped() {
+        isRemoveButtonEnabled = false
         storageService?.removeImageData(with: imageItemModel.id)
     }
     
@@ -81,8 +94,9 @@ extension SearchTabPresenter: SearchTabInput {
                 if let imageData = data {
                     self?.imageItemModel = ImageItemModel(id: UUID(), imageData: imageData, prompt: searchText)
                     self?.stateModel = .loadedImage(imageData)
+                    self?.isRemoveButtonEnabled = false
                 } else {
-                    self?.stateModel = .noImage(String())
+                    self?.stateModel = .noImage(Constants.Text.Search_Tab.noImageFounded)
                 }
             }
         }

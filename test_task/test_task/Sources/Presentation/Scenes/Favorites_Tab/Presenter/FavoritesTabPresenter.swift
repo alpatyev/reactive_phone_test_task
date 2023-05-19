@@ -5,9 +5,8 @@ import UIKit
 
 protocol FavoritesTabInput {
     func viewDidLoaded()
-    func viewAppeared()
+    func viewAppearedWithElements(_ count: Int)
     func viewDisappeared()
-    func reportedDisplayedItemsCount(_ count: Int)
     
     func selectedItem(_ value: ImageItemModel)
     func tappedInfoButton()
@@ -16,12 +15,23 @@ protocol FavoritesTabInput {
 // MARK: - Favorites tab presenter
 
 final class FavoritesTabPresenter {
-    private var itemsCountMessage = String()
+    
+    private var currentItemsCount: Int = 0
+    
     private var view: FavoritesTabOutput?
     private var storageService: StorageDataServiceProtocol?
-    private var currentStatusMessage = Constants.Text.Favorites_Tab.emptyListText
-    private var stateModel: FavoritesTabStateModel = .message(String())
-    private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list
+    
+    private var stateModel: FavoritesTabStateModel = .message(String()) {
+        didSet {
+            view?.updateState(with: stateModel)
+        }
+    }
+    
+    private var helperButtonStateModel: NavigationBarInfoButtonStateModel = .list {
+        didSet {
+            view?.updateNavigationBarState(with: helperButtonStateModel)
+        }
+    }
 }
 
 // MARK: - Favorites tab view input
@@ -30,19 +40,13 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     func viewDidLoaded() {
         storageService = DependencyContainer.shared.resolve(type: StorageDataServiceProtocol.self)
         view = DependencyContainer.shared.resolve(type: FavoritesTabOutput.self)
+        
         view?.updateNavigationBarState(with: .list)
         view?.updateState(with: stateModel)
     }
     
-    func viewAppeared() {
-        DispatchQueue.main.async { [weak self] in
-            if let items = self?.storageService?.fetchAllSortedImageItemModels(), !items.isEmpty {
-                self?.view?.updateState(with: .itemList(items))
-            } else {
-                self?.view?.updateState(with: .itemList([]))
-                self?.view?.updateState(with: .message(Constants.Text.Favorites_Tab.emptyListText))
-            }
-        }
+    func viewAppearedWithElements(_ count: Int) {
+        updateList(count)
     }
     
     func viewDisappeared() {
@@ -61,20 +65,28 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     func tappedInfoButton() {
         switch helperButtonStateModel {
             case .list:
-                helperButtonStateModel = .info(itemsCountMessage)
-            case .info(_):
+                stateModel = .message(Constants.Text.Favorites_Tab.showInfo(currentItemsCount, Constants.Logic.imageItemsLimit))
+                helperButtonStateModel = .info
+            case .info:
                 helperButtonStateModel = .list
+                updateList(currentItemsCount)
         }
         
-        view?.updateNavigationBarState(with: helperButtonStateModel)
     }
     
-    func reportedDisplayedItemsCount(_ count: Int) {
-        if count == 0 {
-            view?.updateState(with: .message(Constants.Text.Favorites_Tab.emptyListText))
-        }
+    private func updateList(_ count: Int) {
+        if count == 0 { stateModel = .message(Constants.Text.Favorites_Tab.emptyListText) }
         
-        itemsCountMessage = Constants.Text.Favorites_Tab.showInfo(count, Constants.Logic.imageItemsLimit)
-        storageService?.cutByLimitIfNeeded(count)
+        DispatchQueue.main.async { [weak self] in
+            if let items = self?.storageService?.fetchAllSortedImageItemModels(), !items.isEmpty {
+                self?.currentItemsCount = items.count
+                self?.stateModel = .itemList(Array(items.prefix(Constants.Logic.imageItemsLimit)))
+                self?.storageService?.cutByLimitIfNeeded(items.count)
+            } else {
+                self?.currentItemsCount = 0
+                self?.stateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
+                self?.view?.removeItemData()
+            }
+        }
     }
 }
