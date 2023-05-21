@@ -85,7 +85,6 @@ extension SearchTabPresenter: SearchTabInput {
         guard cannotUpdateFromCoreData(with: trimmedPrompt) else { view?.closeKeyboard(); return }
         
         stateModel = .loading
-        print(searchText)
         networkService?.fetchImage(with: trimmedPrompt) { [weak self] data in
             DispatchQueue.main.async {
                 if let imageData = data {

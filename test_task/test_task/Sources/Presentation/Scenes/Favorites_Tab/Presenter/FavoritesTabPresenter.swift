@@ -76,6 +76,7 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     
     private func updateList(_ count: Int) {
         if count == 0 { stateModel = .message(Constants.Text.Favorites_Tab.emptyListText) }
+        helperButtonStateModel = .list
         
         DispatchQueue.main.async { [weak self] in
             if let items = self?.storageService?.fetchAllSortedImageItemModels(), !items.isEmpty {
