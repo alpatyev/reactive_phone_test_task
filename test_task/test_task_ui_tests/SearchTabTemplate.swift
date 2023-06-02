@@ -27,7 +27,7 @@ struct SearchTabTemplate {
     }
 }
 
-// MARK: -
+// MARK: - Helper
 
 extension XCUIElement {
     func descendantElement(matching elementType: XCUIElement.ElementType,

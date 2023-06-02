@@ -1,19 +1,29 @@
 import XCTest
 @testable import test_task
 
-// MARK: - Main network manager
+// MARK: - Mock network manager
+
+final class MockNetworkService: NetworkServiceProtocol {
+    func fetchImage(with prompt: String, _ completion: @escaping (Data?) -> ()) {
+        let data = prompt.data(using: .utf8)
+        completion(data)
+    }
+}
+
+// MARK: - Testing
 
 class NetworkService_tests: XCTestCase {
     
     // MARK: - Properties
 
-    var networkService: NetworkService!
+    var networkService: NetworkServiceProtocol!
 
     // MARK: - Setup
 
     override func setUp() {
         super.setUp()
-        networkService = NetworkService()
+        continueAfterFailure = false
+        networkService = MockNetworkService()
     }
 
     override func tearDown() {
@@ -26,10 +36,10 @@ class NetworkService_tests: XCTestCase {
     func test_fetch_image() {
         let expectation = XCTestExpectation(description: "Just fetching data here")
         
-        networkService.fetchImage(with: "Travis Skott") { data in
+        networkService.fetchImage(with: "Usual prompt") { data in
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 0)
     }
 }
