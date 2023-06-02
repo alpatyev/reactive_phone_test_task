@@ -57,6 +57,8 @@ enum Constants {
             static let removeButton = NSLocalizedString("Search_Tab.removeButton", comment: "")
             static let clearDataButton = NSLocalizedString("Search_Tab.clearDataButton", comment: "")
             static let noImageFounded = NSLocalizedString("Search_Tab.noImageFounded", comment: "")
+            static let networkDownAlert = NSLocalizedString("SearchTab.networkDownAlert", comment: "")
+            static let closeButtonAlert = NSLocalizedString("SearchTab.closeButtonAlert", comment: "")
         }
         
         enum Favorites_Tab {

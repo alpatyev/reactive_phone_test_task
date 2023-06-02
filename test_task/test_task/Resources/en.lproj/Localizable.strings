@@ -8,6 +8,8 @@
 "Search_Tab.removeButton" = "Remove";
 "Search_Tab.clearDataButton" = "Delete all saved data";
 "Search_Tab.noImageFounded" = "Sorry, image might not exists.";
+"SearchTab.networkDownAlert" = "No internet connection.";
+"SearchTab.closeButtonAlert" = "Close";
 
 // MARK: - Text for Favorites_Tab
 

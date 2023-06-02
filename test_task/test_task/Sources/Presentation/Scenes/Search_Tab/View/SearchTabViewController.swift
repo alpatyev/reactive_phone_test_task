@@ -6,7 +6,7 @@ protocol SearchTabOutput: AnyObject {
     func closeKeyboard()
     func updateState(with newState: SearchTabStateModel)
     func setRemoveButtonEnabled(_ flag: Bool)
-    func showAlertMessage(_ message: String)
+    func showAlertMessage(messageTitle: String, closeTitle: String)
 }
 
 // MARK: - Search tab ViewController
@@ -252,9 +252,9 @@ extension SearchTabViewController: SearchTabOutput {
         flag ? performStandardRemoveButton() : performDisabledRemoveButton()
     }
     
-    func showAlertMessage(_ message: String) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
+    func showAlertMessage(messageTitle: String, closeTitle: String) {
+        let alertController = UIAlertController(title: nil, message: messageTitle, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: closeTitle, style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
         
