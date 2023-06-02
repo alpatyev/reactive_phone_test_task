@@ -121,5 +121,6 @@ extension SearchTabPresenter: SearchTabSelectedImageInput {
     func selectedImage(item: ImageItemModel) {
         imageItemModel = item
         stateModel = .loadedImage(item.imageData)
+        view?.updateTextField(with: item.prompt)
     }
 }

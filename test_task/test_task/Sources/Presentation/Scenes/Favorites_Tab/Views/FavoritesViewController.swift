@@ -118,13 +118,25 @@ final class FavoritesTabViewController: UIViewController {
 // MARK: - TableView datasource & delegate
 
 extension FavoritesTabViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         itemModelsList.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        UIView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: imageCellID, for: indexPath)
-        let itemModel = itemModelsList[indexPath.row]
+        let itemModel = itemModelsList[indexPath.section]
         cell.setup(with: itemModel)
         return cell
     }
@@ -136,7 +148,7 @@ extension FavoritesTabViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.selectedItem(itemModelsList[indexPath.row])
+        presenter?.selectedItem(itemModelsList[indexPath.section])
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

@@ -34,7 +34,7 @@ enum Constants {
         static let mediumCornerRadius: CGFloat = 24
         static let defaultBorderWidth: CGFloat = 2
         static let emdededContentMultiplier: CGFloat = 0.84
-        static let defaultRowHeight: CGFloat = 80
+        static let defaultRowHeight: CGFloat = 60
     }
     
     // MARK: - Asset images names environement

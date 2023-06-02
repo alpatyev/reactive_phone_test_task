@@ -7,6 +7,7 @@ protocol SearchTabOutput: AnyObject {
     func updateState(with newState: SearchTabStateModel)
     func setRemoveButtonEnabled(_ flag: Bool)
     func showAlertMessage(messageTitle: String, closeTitle: String)
+    func updateTextField(with text: String)
 }
 
 // MARK: - Search tab ViewController
@@ -256,6 +257,10 @@ extension SearchTabViewController: SearchTabOutput {
         let alertController = UIAlertController(title: nil, message: messageTitle, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: closeTitle, style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func updateTextField(with text: String) {
+        searchTextField.text = text
     }
         
     private func performStandardRemoveButton() {
