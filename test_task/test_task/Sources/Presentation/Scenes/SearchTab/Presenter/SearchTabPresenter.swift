@@ -49,7 +49,7 @@ extension SearchTabPresenter: SearchTabInput {
         storageService = DependencyContainer.shared.resolve(type: StorageDataServiceProtocol.self)
                 
         view = DependencyContainer.shared.resolve(type: SearchTabOutput.self)
-        stateModel = SearchTabStateModel.noImage(Constants.Text.Search_Tab.imageDefaultLabel)
+        stateModel = SearchTabStateModel.noImage(Constants.Text.SearchTab.imageDefaultLabel)
     }
     
     func tappedSomewhere() {
@@ -92,7 +92,7 @@ extension SearchTabPresenter: SearchTabInput {
                     self?.stateModel = .loadedImage(imageData)
                     self?.isRemoveButtonEnabled = false
                 } else {
-                    self?.stateModel = .noImage(Constants.Text.Search_Tab.noImageFounded)
+                    self?.stateModel = .noImage(Constants.Text.SearchTab.noImageFounded)
                 }
             }
         }
@@ -110,8 +110,8 @@ extension SearchTabPresenter: SearchTabInput {
     }
     
     private func showNetworkDownAlert() {
-        view?.showAlertMessage(messageTitle: Constants.Text.Search_Tab.networkDownAlert,
-                               closeTitle: Constants.Text.Search_Tab.closeButtonAlert)
+        view?.showAlertMessage(messageTitle: Constants.Text.SearchTab.networkDownAlert,
+                               closeTitle: Constants.Text.SearchTab.closeButtonAlert)
     }
 }
 
@@ -122,5 +122,6 @@ extension SearchTabPresenter: SearchTabSelectedImageInput {
         imageItemModel = item
         stateModel = .loadedImage(item.imageData)
         view?.updateTextField(with: item.prompt)
+        isRemoveButtonEnabled = true
     }
 }

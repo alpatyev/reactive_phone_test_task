@@ -49,7 +49,7 @@ enum Constants {
     // MARK: - Text environement
     
     enum Text {
-        enum Search_Tab {
+        enum SearchTab {
             static let placeholder = NSLocalizedString("Search_Tab.placeholder", comment: "")
             static let navigationTitle = NSLocalizedString("Search_Tab.navigationTitle", comment: "")
             static let imageDefaultLabel = NSLocalizedString("Search_Tab.imageDefaultLabel", comment: "")
@@ -61,7 +61,7 @@ enum Constants {
             static let closeButtonAlert = NSLocalizedString("SearchTab.closeButtonAlert", comment: "")
         }
         
-        enum Favorites_Tab {
+        enum FavoritesTab {
             static let navigationTitle = NSLocalizedString("Favorites_Tab.navigationTitle", comment: "")
             static let emptyListText = NSLocalizedString("Favorites_Tab.emptyListText", comment: "")
             static var showInfo: (_ saved: Int, _ limit: Int) -> String = { saved, limit in
@@ -76,3 +76,14 @@ enum Constants {
         static let imageItemsLimit: Int = 20
     }
  }
+
+// MARK: - Accessibility id
+enum AccessibilityIDs {
+    enum SearchTab {
+        static let searchTextFieldContainer = "searchTextFieldContainer"
+        static let searchTextField = "searchTextField"
+        static let removeButton = "removeButton"
+        static let saveButton = "saveButton"
+
+    }
+}

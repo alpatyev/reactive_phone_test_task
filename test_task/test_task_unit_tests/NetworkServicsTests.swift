@@ -3,7 +3,7 @@ import XCTest
 
 // MARK: - Main network manager
 
-class NetworkServiceTests: XCTestCase {
+class NetworkService_tests: XCTestCase {
     
     // MARK: - Properties
 

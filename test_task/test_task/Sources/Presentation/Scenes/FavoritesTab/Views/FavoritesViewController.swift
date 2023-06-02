@@ -72,7 +72,7 @@ final class FavoritesTabViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Constants.Colors.background
         navigationController?.navigationBar.prefersLargeTitles = true
-        setupHolderControllersAppearance(Constants.Text.Favorites_Tab.navigationTitle)
+        setupHolderControllersAppearance(Constants.Text.FavoritesTab.navigationTitle)
         
         let button = UIBarButtonItem(image: UIImage(named: Constants.ImageNames.info),
                                      style: .plain,
