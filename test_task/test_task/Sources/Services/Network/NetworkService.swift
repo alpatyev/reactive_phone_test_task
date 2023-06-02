@@ -34,6 +34,7 @@ final class NetworkService: NetworkServiceProtocol {
                 if let flickrResponseData = data {
                     let decoded = try JSONDecoder().decode(FlickrResponseData.self, from: flickrResponseData)
                     completion(decoded.photos?.list.first)
+                    return
                 }
             } catch let error {
                 print("* NETWORK SERVICE ERROR: \(error.localizedDescription)")
