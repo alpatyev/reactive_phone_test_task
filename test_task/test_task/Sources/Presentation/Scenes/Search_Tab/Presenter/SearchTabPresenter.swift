@@ -83,7 +83,7 @@ extension SearchTabPresenter: SearchTabInput {
         guard let searchText = value else { return }
         let trimmedPrompt = searchText.trimmingCharacters(in: .whitespaces)
         guard cannotUpdateFromCoreData(with: trimmedPrompt) else { view?.closeKeyboard(); return }
-        
+        guard NetworkReachability.isConnected() else { showNetworkDownAlert(); return }
         stateModel = .loading
         networkService?.fetchImage(with: trimmedPrompt) { [weak self] data in
             DispatchQueue.main.async {
@@ -107,6 +107,11 @@ extension SearchTabPresenter: SearchTabInput {
         } else {
             return true
         }
+    }
+    
+    private func showNetworkDownAlert() {
+        view?.showAlertMessage(messageTitle: Constants.Text.Search_Tab.networkDownAlert,
+                               closeTitle: Constants.Text.Search_Tab.closeButtonAlert)
     }
 }
 

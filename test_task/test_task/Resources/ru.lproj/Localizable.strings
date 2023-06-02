@@ -8,6 +8,8 @@
 "Search_Tab.removeButton" = "Удалить";
 "Search_Tab.clearDataButton" = "Удалить все сохраненные данные.";
 "Search_Tab.noImageFounded" = "Извините, но такое изображение не найдено.";
+"SearchTab.networkDownAlert" = "Нет соединения с интернетом.";
+"SearchTab.closeButtonAlert" = "Закрыть";
 
 // MARK: - Text for Favorites_Tab
 
