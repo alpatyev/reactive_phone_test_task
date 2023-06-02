@@ -65,7 +65,7 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     func tappedInfoButton() {
         switch helperButtonStateModel {
             case .list:
-                stateModel = .message(Constants.Text.Favorites_Tab.showInfo(currentItemsCount, Constants.Logic.imageItemsLimit))
+                stateModel = .message(Constants.Text.FavoritesTab.showInfo(currentItemsCount, Constants.Logic.imageItemsLimit))
                 helperButtonStateModel = .info
             case .info:
                 helperButtonStateModel = .list
@@ -75,7 +75,7 @@ extension FavoritesTabPresenter: FavoritesTabInput {
     }
     
     private func updateList(_ count: Int) {
-        if count == 0 { stateModel = .message(Constants.Text.Favorites_Tab.emptyListText) }
+        if count == 0 { stateModel = .message(Constants.Text.FavoritesTab.emptyListText) }
         helperButtonStateModel = .list
         
         DispatchQueue.main.async { [weak self] in
@@ -85,7 +85,7 @@ extension FavoritesTabPresenter: FavoritesTabInput {
                 self?.storageService?.cutByLimitIfNeeded(items.count)
             } else {
                 self?.currentItemsCount = 0
-                self?.stateModel = .message(Constants.Text.Favorites_Tab.emptyListText)
+                self?.stateModel = .message(Constants.Text.FavoritesTab.emptyListText)
                 self?.view?.removeItemData()
             }
         }

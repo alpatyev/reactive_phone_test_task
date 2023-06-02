@@ -7,6 +7,7 @@ protocol SearchTabOutput: AnyObject {
     func updateState(with newState: SearchTabStateModel)
     func setRemoveButtonEnabled(_ flag: Bool)
     func showAlertMessage(messageTitle: String, closeTitle: String)
+    func updateTextField(with text: String)
 }
 
 // MARK: - Search tab ViewController
@@ -23,6 +24,7 @@ final class SearchTabViewController: UIViewController {
         let subview = UIView()
         subview.backgroundColor = Constants.Colors.backgroundAccent
         subview.layer.cornerRadius = Constants.Layout.smallCornerRadius
+        subview.accessibilityIdentifier = AccessibilityIDs.SearchTab.searchTextFieldContainer
         subview.translatesAutoresizingMaskIntoConstraints = false
         return subview
     }()
@@ -35,8 +37,9 @@ final class SearchTabViewController: UIViewController {
         textField.returnKeyType = .search
         textField.font = Constants.Fonts.subTitle
         textField.textColor = Constants.Colors.primaryText
-        textField.setPlaceholder(text: Constants.Text.Search_Tab.placeholder,
+        textField.setPlaceholder(text: Constants.Text.SearchTab.placeholder,
                                  color: Constants.Colors.secondaryText)
+        textField.accessibilityIdentifier = AccessibilityIDs.SearchTab.searchTextField
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -72,9 +75,10 @@ final class SearchTabViewController: UIViewController {
         let button = UIButton()
         button.titleLabel?.font = Constants.Fonts.thin
         button.highlightable(accentColor: Constants.Colors.accent,
-                             title: Constants.Text.Search_Tab.saveButton)
+                             title: Constants.Text.SearchTab.saveButton)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = AccessibilityIDs.SearchTab.saveButton
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -83,16 +87,17 @@ final class SearchTabViewController: UIViewController {
         let button = UIButton()
         button.titleLabel?.font = Constants.Fonts.thin
         button.highlightable(accentColor: Constants.Colors.destructive,
-                             title: Constants.Text.Search_Tab.removeButton)
+                             title: Constants.Text.SearchTab.removeButton)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = "removeButton"
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var clearDataButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Constants.Text.Search_Tab.clearDataButton, for: .normal)
+        button.setTitle(Constants.Text.SearchTab.clearDataButton, for: .normal)
         button.setTitleColor(Constants.Colors.secondaryText.withAlphaComponent(0.4), for: .normal)
         button.setTitleColor(Constants.Colors.accent, for: .highlighted)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -126,7 +131,7 @@ final class SearchTabViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Constants.Colors.background
         navigationController?.navigationBar.prefersLargeTitles = false
-        setupHolderControllersAppearance(Constants.Text.Search_Tab.navigationTitle)
+        setupHolderControllersAppearance(Constants.Text.SearchTab.navigationTitle)
     }
     
     private func setupHierarachy() {
@@ -257,17 +262,21 @@ extension SearchTabViewController: SearchTabOutput {
         alertController.addAction(UIAlertAction(title: closeTitle, style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
+    
+    func updateTextField(with text: String) {
+        searchTextField.text = text
+    }
         
     private func performStandardRemoveButton() {
         removeImageButton.isUserInteractionEnabled = true
         removeImageButton.highlightable(accentColor: Constants.Colors.destructive,
-                                        title: Constants.Text.Search_Tab.removeButton)
+                                        title: Constants.Text.SearchTab.removeButton)
     }
     
     private func performDisabledRemoveButton(){
         removeImageButton.isUserInteractionEnabled = false
         removeImageButton.highlightable(accentColor: Constants.Colors.backgroundAccent,
-                                        title: Constants.Text.Search_Tab.removeButton)
+                                        title: Constants.Text.SearchTab.removeButton)
     }
     
     private func performNoImageState(_ label: String) {

@@ -5,6 +5,8 @@ import UIKit
 extension UITableViewCell {
     func setup(with model: ImageItemModel) {
         imageView?.clipsToBounds = true
+        imageView?.layer.borderWidth = Constants.Layout.defaultBorderWidth
+        imageView?.layer.borderColor = Constants.Colors.background.cgColor
         imageView?.layer.cornerRadius = Constants.Layout.smallCornerRadius / 2
         imageView?.contentMode = .scaleToFill
         imageView?.backgroundColor = Constants.Colors.backgroundAccent

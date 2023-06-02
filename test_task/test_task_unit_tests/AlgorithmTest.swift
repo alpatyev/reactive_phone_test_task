@@ -13,7 +13,6 @@ final class AlgorithmTests: XCTestCase {
     let output: [[Int]] = [[0,1,0],
                            [1,0,1],
                            [2,1,2]]
-
     
     // MARK: - Tests
     
