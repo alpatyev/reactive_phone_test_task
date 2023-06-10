@@ -1,0 +1,18 @@
+
+// MARK: - Text for Search_Tab
+
+"Search_Tab.placeholder" = "Enter image name here";
+"Search_Tab.navigationTitle" = "Search";
+"Search_Tab.imageDefaultLabel" = "Try to find some unique images!";
+"Search_Tab.saveButton" = "Save";
+"Search_Tab.removeButton" = "Remove";
+"Search_Tab.clearDataButton" = "Delete all saved data";
+"Search_Tab.noImageFounded" = "Sorry, image might not exists.";
+"SearchTab.networkDownAlert" = "No internet connection.";
+"SearchTab.closeButtonAlert" = "Close";
+
+// MARK: - Text for Favorites_Tab
+
+"Favorites_Tab.navigationTitle" = "Favorites";
+"Favorites_Tab.emptyListText" = "Sorry, we can`t find any images.\nTry to get it in search tab...";
+"Favorites_Tab.showInfo" = "You have been saved %d images. Total limit is %d.";

@@ -1,0 +1,18 @@
+
+// MARK: - Text for Search_Tab
+
+"Search_Tab.placeholder" = "Введите название картинки";
+"Search_Tab.navigationTitle" = "Поиск";
+"Search_Tab.imageDefaultLabel" = "Попробуйте найти пару уникальных картинок!";
+"Search_Tab.saveButton" = "Сохранить";
+"Search_Tab.removeButton" = "Удалить";
+"Search_Tab.clearDataButton" = "Удалить все сохраненные данные.";
+"Search_Tab.noImageFounded" = "Извините, но такое изображение не найдено.";
+"SearchTab.networkDownAlert" = "Нет соединения с интернетом.";
+"SearchTab.closeButtonAlert" = "Закрыть";
+
+// MARK: - Text for Favorites_Tab
+
+"Favorites_Tab.navigationTitle" = "Избранное";
+"Favorites_Tab.emptyListText" = "Извините, но у вас нет избранных картинок.\nПроверьте вкладку поиска...";
+"Favorites_Tab.showInfo" = "Сохранено %d. Общий лимит картинок %d.";
